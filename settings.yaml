@@ -10,35 +10,33 @@
 settings:
 
   # Output fabric network config directory Generator Settings
-  output: networks
+  output: D:\workspace_blockchain_chaincode\blockchain-fabric-network\prod
 
   # OrdererType: kafka | solo
   orderer_type: kafka
 
   # Orderer Organization Generator Settings
   orderers:
-    - name: Orderer1
-      domain: example.com
-      hostnames: [first, last]
+    - name: Orderer
+      domain: hoojo.orderer
+      hostnames: [org1st, org2nd]
 
   # Peer Organization Generator Settings
   peers:
     - name: Org1
-      domain: hoojo.top
-      hostnames: [foo, bar]
+      domain: hoojo.me
+      hostnames: [peer1st, peer2nd]
       user_count: 2
-      template_count: 2
 
     - name: Org2
-      domain: hoojo.me
-      hostnames: [xyz, abc]
+      domain: hoojo.top
+      hostnames: [peer3rd, peer4th]
       user_count: 2
-      template_count: 2
 
   zookeeper:
-    domain: simple.xyz
+    domain: hoojo.com
     count: 3
 
   kafka:
-    domain: simple.top
+    domain: hoojo.com
     count: 4
