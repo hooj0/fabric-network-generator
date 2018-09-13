@@ -18,30 +18,30 @@ OrdererOrgs:
   #        Country: US
   #        Province: California
   #        Locality: San Francisco
+  # ---------------------------------------------------------------------------
+  # "Specs" - See PeerOrgs below for complete description
+  # ---------------------------------------------------------------------------
   #    Specs:
   #      - Hostname: orderer
 
   {% for orderer in orderers %}
-  - Name: ${orderer.name | title }
-    Domain: ${orderer.domain | lower }
+  - Name: %{orderer.name | title }
+    Domain: %{orderer.domain | lower }
     CA:
         Country: US
         Province: California
         Locality: San Francisco
-    # ---------------------------------------------------------------------------
-    # "Specs" - See PeerOrgs below for complete description
-    # ---------------------------------------------------------------------------
     Specs:
     {% if orderer.hostnames is sequence %}
       {% for hostname in orderer.hostnames %}
-      - Hostname: ${hostname | lower}
+      - Hostname: %{hostname | lower}
       {% endfor %}
     {% elif orderer.count > 0 %}
       {% for index in range(orderer.count) %}
-      - Hostname: ${orderer.name | lower}${index }
+      - Hostname: %{orderer.name | lower}%{index }
       {% endfor %}
     {% else %}
-      - Hostname: ${orderer.name | lower}
+      - Hostname: %{orderer.name | lower}
     {% endif %}
 
   {% endfor %}
@@ -109,8 +109,8 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
 
   {% for peer in peers %}
-  - Name: ${peer.name | title }
-    Domain: ${peer.name | lower }.${peer.domain | lower }
+  - Name: %{peer.name | title }
+    Domain: %{peer.name | lower }.%{peer.domain | lower }
     EnableNodeOUs: true
     CA:
         Country: US
@@ -119,15 +119,15 @@ PeerOrgs:
     {% if peer.hostnames is iterable %}
     Specs:
       {% for hostname in peer.hostnames %}
-      - Hostname: ${hostname | lower } # implicitly "${hostname | lower }.${peer.name | lower }.${peer.domain | lower }"
+      - Hostname: %{hostname | lower } # implicitly "%{hostname | lower }.%{peer.name | lower }.%{peer.domain | lower }"
         {% if loop.first %}
         #CommonName: foo27.org5.example.com # overrides Hostname-based FQDN set above
         {% endif %}
       {% endfor %}
     {% endif %}
     Template:
-      Count: ${peer.template_count }
+      Count: %{peer.template_count }
     Users:
-      Count: ${peer.user_count }
+      Count: %{peer.user_count }
 
   {% endfor %}
