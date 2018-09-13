@@ -19,13 +19,13 @@ Profiles:
             <<: *OrdererDefaults
             Organizations:
               {% for orderer in orderers %}
-                - *${orderer.name | title }Org
+                - *%{orderer.name | title }Org
               {% endfor %}
         Consortiums:
             SampleConsortium:
                 Organizations:
                   {% for peer in peers %}
-                    - *${peer.name | title }
+                    - *%{peer.name | title }
                   {% endfor %}
 
     TwoOrgsChannel:
@@ -34,7 +34,7 @@ Profiles:
             <<: *ApplicationDefaults
             Organizations:
               {% for peer in peers %}
-                - *${peer.name | title }
+                - *%{peer.name | title }
               {% endfor %}
 
 ################################################################################
@@ -54,7 +54,7 @@ Profiles:
             <<: *OrdererDefaults
             Organizations:
               {% for orderer in orderers %}
-                - *${orderer.name | title }Org
+                - *%{orderer.name | title }Org
               {% endfor %}
             Capabilities:
                 <<: *OrdererCapabilities
@@ -62,7 +62,7 @@ Profiles:
             SampleConsortium:
                 Organizations:
                   {% for peer in peers %}
-                    - *${peer.name | title }
+                    - *%{peer.name | title }
                   {% endfor %}
 
     TwoOrgsChannel_v11:
@@ -71,7 +71,7 @@ Profiles:
             <<: *ApplicationDefaults
             Organizations:
               {% for peer in peers %}
-                - *${peer.name | title }
+                - *%{peer.name | title }
               {% endfor %}
             Capabilities:
                 <<: *ApplicationCapabilities
@@ -109,10 +109,10 @@ Organizations:
 #        AdminPrincipal: Role.ADMIN
 
     {% for orderer in orderers %}
-    - &${orderer.name | title }Org
-        Name: ${orderer.name | title }Org
-        ID: ${orderer.name | title }MSP
-        MSPDir: crypto-config/ordererOrganizations/${orderer.domain | lower}/msp
+    - &%{orderer.name | title }Org
+        Name: %{orderer.name | title }Org
+        ID: %{orderer.name | title }MSP
+        MSPDir: crypto-config/ordererOrganizations/%{orderer.domain | lower}/msp
 
     {% endfor %}
 
@@ -135,16 +135,16 @@ Organizations:
 #              Port: 7051
 
     {% for peer in peers %}
-    - &${peer.name | title }
-        Name: ${peer.name | title }MSP
-        ID: ${peer.name | title }MSP
-        MSPDir: crypto-config/peerOrganizations/${peer.name | lower }.${peer.domain | lower }/msp
+    - &%{peer.name | title }
+        Name: %{peer.name | title }MSP
+        ID: %{peer.name | title }MSP
+        MSPDir: crypto-config/peerOrganizations/%{peer.name | lower }.%{peer.domain | lower }/msp
 
         AnchorPeers:
           {% if peer.hostnames is iterable %}
-            - Host: ${peer.hostnames[0] | lower }.${peer.name | lower }.${peer.domain | lower }
+            - Host: %{peer.hostnames[0] | lower }.%{peer.name | lower }.%{peer.domain | lower }
           {% else %}
-            - Host: peer0.${peer.name | lower }.${peer.domain | lower }
+            - Host: peer0.%{peer.name | lower }.%{peer.domain | lower }
           {% endif %}
               Port: 7051
 
@@ -166,7 +166,7 @@ Orderer: &OrdererDefaults
 
     Addresses:
       {% for orderer in orderers %}
-        - ${orderer.name | lower }.${orderer.domain | lower}:7050
+        - %{orderer.name | lower }.%{orderer.domain | lower}:7050
       {% endfor %}
 
     # Batch Timeout: The amount of time to wait before creating a batch.
