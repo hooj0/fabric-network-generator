@@ -23,8 +23,9 @@
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 from jinja2 import select_autoescape
+from generator.app_log import AppLog as log
 import os
-from app_log import AppLog as log
+
 
 class OrdererOrg(object):
     """
@@ -86,9 +87,9 @@ class TemplateEngine(object):
     __env = Environment(loader=__loader,
                         autoescape=select_autoescape(['yml', 'yaml', 'js', 'sh']),
                         block_start_string='{%', block_end_string='%}',
-                        variable_start_string='${', variable_end_string='}',
+                        variable_start_string='%{', variable_end_string='}',
 
-                        line_statement_prefix="%",
+                        line_statement_prefix="%%",
                         line_comment_prefix="%#",
                         trim_blocks=True, keep_trailing_newline=True, lstrip_blocks=True)
 
@@ -104,13 +105,14 @@ class TemplateEngine(object):
 
     @staticmethod
     def writer(output, template_file, data):
-
         file_path = output + "/" + template_file
+
         realpath = os.path.realpath(file_path)
+        dirname = os.path.dirname(realpath)
         log.info('generator file to realpath: %s' % realpath)
 
-        if not os.path.exists(file_path):
-            os.makedirs(os.path.dirname(realpath))
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
 
         with open(file_path, 'w', encoding=u'utf-8') as file:
             file.seek(0)
@@ -137,35 +139,29 @@ class TemplateEngine(object):
 
 class GenFabricNetworkTools(object):
 
-    orderer_org = "orderer"
-    orderer_org_domain = "simple.cn"
-    orderer_org_hostnames = ["orderer_foo", "orderer_bar"]
+    def gen_crypot_config(self, orderers, peers):
 
-    peer_org = "peer"
+        if orderers is None:
+            orderers = [OrdererOrg()]
 
-    def gen_crypot_config(self):
+        if peers is None:
+            peers = [PeerOrg('Org1'), PeerOrg('Org2')]
 
-        # orderer = OrdererOrg(hostnames=['foo', 'bar'], count=5)
-        orderer = OrdererOrg(count=3)
-        # orderer = OrdererOrg()
+        TemplateEngine.generator("networks", "fabric-configs/crypto-config.yaml", dict(orderers=orderers, peers=peers))
 
-        # peer = PeerOrg()
-        peer = PeerOrg(hostnames=['foo', 'bar'], user_count=3, template_count=4)
+    def gen_configtx(self, orderers, peers):
 
-        TemplateEngine.generator("networks", "fabric-configs/crypto-config.yaml", dict(orderers=[orderer], peers=[peer]))
+        if orderers is None:
+            orderers = [OrdererOrg()]
 
-    def gen_configtx(self):
-        orderer = OrdererOrg(hostnames=['foo', 'bar'], count=5)
-        orderer2 = OrdererOrg("Orderer2", domain="hoojo.top")
-        orderer3 = OrdererOrg("Orderer3", domain="hoojo.xyz")
+        if peers is None:
+            peers = [PeerOrg('Org1'), PeerOrg('Org2')]
 
-        peer = PeerOrg(domain='simple.com')
-        peer2 = PeerOrg("Org2", hostnames=['foo', 'bar'], user_count=3, template_count=4)
-        peer3 = PeerOrg("Org3", domain='example.com')
+        TemplateEngine.generator("networks", "fabric-configs/configtx.yaml", dict(orderers=orderers, peers=peers))
 
-        TemplateEngine.generator("networks", "fabric-configs/configtx.yaml", dict(orderers=[orderer, orderer2, orderer3], peers=[peer, peer2, peer3]))
+    def gen_generate_shell(self, peers):
 
+        if peers is None:
+            peers = [PeerOrg('Org1'), PeerOrg('Org2')]
 
-tools = GenFabricNetworkTools()
-# tools.gen_crypot_config()
-tools.gen_configtx()
+        TemplateEngine.generator("networks", "fabric-configs/generate.sh", dict(peers=peers))
