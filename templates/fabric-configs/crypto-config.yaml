@@ -1,7 +1,8 @@
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+
+
 
 # ---------------------------------------------------------------------------
 # "OrdererOrgs" - Definition of organizations managing orderer nodes
@@ -10,8 +11,19 @@ OrdererOrgs:
   # ---------------------------------------------------------------------------
   # Orderer
   # ---------------------------------------------------------------------------
-  - Name: Orderer
-    Domain: simple.com
+
+  #- Name: Orderer
+  #    Domain: simple.com
+  #    CA:
+  #        Country: US
+  #        Province: California
+  #        Locality: San Francisco
+  #    Specs:
+  #      - Hostname: orderer
+
+  {% for orderer in orderers %}
+  - Name: ${orderer.name | title }
+    Domain: ${orderer.domain | lower }
     CA:
         Country: US
         Province: California
@@ -20,7 +32,20 @@ OrdererOrgs:
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
     Specs:
-      - Hostname: orderer
+    {% if orderer.hostnames is sequence %}
+      {% for hostname in orderer.hostnames %}
+      - Hostname: ${hostname | lower}
+      {% endfor %}
+    {% elif orderer.count > 0 %}
+      {% for index in range(orderer.count) %}
+      - Hostname: ${orderer.name | lower}${index }
+      {% endfor %}
+    {% else %}
+      - Hostname: ${orderer.name | lower}
+    {% endif %}
+
+  {% endfor %}
+
 # ---------------------------------------------------------------------------
 # "PeerOrgs" - Definition of organizations managing peer nodes
 # ---------------------------------------------------------------------------
@@ -28,13 +53,13 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   # Org1
   # ---------------------------------------------------------------------------
-  - Name: Org1
-    Domain: org1.foo.com
-    EnableNodeOUs: true
-    CA:
-        Country: US
-        Province: California
-        Locality: San Francisco
+  #- Name: Org1
+  #  Domain: org1.foo.com
+  #  EnableNodeOUs: true
+  #  CA:
+  #      Country: US
+  #      Province: California
+  #      Locality: San Francisco
     # ---------------------------------------------------------------------------
     # "Specs"
     # ---------------------------------------------------------------------------
@@ -68,8 +93,8 @@ PeerOrgs:
     # sections and the aggregate nodes will be created for you.  Take care with
     # name collisions
     # ---------------------------------------------------------------------------
-    Template:
-      Count: 2
+    #Template:
+    #  Count: 2
       # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
     # ---------------------------------------------------------------------------
@@ -77,19 +102,32 @@ PeerOrgs:
     # ---------------------------------------------------------------------------
     # Count: The number of user accounts _in addition_ to Admin
     # ---------------------------------------------------------------------------
-    Users:
-      Count: 1
+    #Users:
+    #  Count: 1
   # ---------------------------------------------------------------------------
   # Org2: See "Org1" for full specification
   # ---------------------------------------------------------------------------
-  - Name: Org2
-    Domain: org2.bar.com
+
+  {% for peer in peers %}
+  - Name: ${peer.name | title }
+    Domain: ${peer.name | lower }.${peer.domain | lower }
     EnableNodeOUs: true
     CA:
         Country: US
         Province: California
         Locality: San Francisco
+    {% if peer.hostnames is iterable %}
+    Specs:
+      {% for hostname in peer.hostnames %}
+      - Hostname: ${hostname | lower } # implicitly "${hostname | lower }.${peer.name | lower }.${peer.domain | lower }"
+        {% if loop.first %}
+        #CommonName: foo27.org5.example.com # overrides Hostname-based FQDN set above
+        {% endif %}
+      {% endfor %}
+    {% endif %}
     Template:
-      Count: 2
+      Count: ${peer.template_count }
     Users:
-      Count: 1
+      Count: ${peer.user_count }
+
+  {% endfor %}
