@@ -88,17 +88,20 @@ function replacePrivateKey () {
     cp -rv ../docker-compose-fabric-template.yaml docker-compose-fabric-${VERSION_DIR}.yaml
 
     CURRENT_DIR=$PWD
-    cd ./$CRYPTO_CONFIG_LOCATION/peerOrganizations/org1.foo.com/ca/
-    PRIV_KEY=$(ls *_sk)
-    cd $CURRENT_DIR
-    
-    sed $OPTS "s/CA1_PRIVATE_KEY/${PRIV_KEY}/g" "docker-compose-fabric-${VERSION_DIR}.yaml"
-
-    cd ./$CRYPTO_CONFIG_LOCATION/peerOrganizations/org2.bar.com/ca/
+    {% for peer in peers %}
+    cd ./$CRYPTO_CONFIG_LOCATION/peerOrganizations/%{peer.name | lower }.%{peer.domain | lower }/ca/
     PRIV_KEY=$(ls *_sk)
     cd $CURRENT_DIR
 
-    sed $OPTS "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" "docker-compose-fabric-${VERSION_DIR}.yaml"
+    sed $OPTS "s/CA%{loop.index0}_PRIVATE_KEY/${PRIV_KEY}/g" "docker-compose-fabric-${VERSION_DIR}.yaml"
+
+    {% endfor %}
+
+#    cd ./$CRYPTO_CONFIG_LOCATION/peerOrganizations/org2.bar.com/ca/
+#    PRIV_KEY=$(ls *_sk)
+#    cd $CURRENT_DIR
+#
+#    sed $OPTS "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" "docker-compose-fabric-${VERSION_DIR}.yaml"
     
     mv -vf docker-compose-fabric-${VERSION_DIR}.yaml ../docker-compose-fabric-${VERSION_DIR}.yaml
     log done "replace sk"
@@ -182,22 +185,16 @@ function generateChannelArtifacts() {
 
 function generateAnchorPeerArtifacts() {
     echo
+    {% for peer in peers %}
     echo "#################################################################"
-    echo "#######    Generating anchor peer update for Org1MSP   ##########"
+    echo "#######    Generating anchor peer update for %{peer.name | title }MSP   ##########"
     echo "#################################################################"
-    log yellow "==> cryptogen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./$CHANNEL_ARTIFACTS_LOCATION/Org1MSPanchors.tx -channelID $1 -asOrg Org1MSP"
-    $CONFIGTXGEN -profile TwoOrgsChannel -outputAnchorPeersUpdate ./$CHANNEL_ARTIFACTS_LOCATION/Org1MSPanchors.tx -channelID $1 -asOrg Org1MSP
+    log yellow "==> cryptogen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./$CHANNEL_ARTIFACTS_LOCATION/%{peer.name | title }MSPanchors.tx -channelID $1 -asOrg %{peer.name | title }MSP"
+    $CONFIGTXGEN -profile TwoOrgsChannel -outputAnchorPeersUpdate ./$CHANNEL_ARTIFACTS_LOCATION/%{peer.name | title }MSPanchors.tx -channelID $1 -asOrg %{peer.name | title }MSP
     
-    log done "generate anchor peer[Org1MSP]"
+    log done "generate anchor peer[%{peer.name | title }MSP]"
+    {% endfor %}
 
-    echo
-    echo "#################################################################"
-    echo "#######    Generating anchor peer update for Org2MSP   ##########"
-    echo "#################################################################"
-    log yellow "==> cryptogen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./$CHANNEL_ARTIFACTS_LOCATION/Org2MSPanchors.tx -channelID $1 -asOrg Org2MSP"
-    $CONFIGTXGEN -profile TwoOrgsChannel -outputAnchorPeersUpdate ./$CHANNEL_ARTIFACTS_LOCATION/Org2MSPanchors.tx -channelID $1 -asOrg Org2MSP
-    
-    log done "generate anchor peer[Org2MSP]"
     echo
 }
 
@@ -280,7 +277,7 @@ function fetchRequiredChannelArtifacts() {
     echo "#######       fetch channel artifacts directory       ##########"
     echo "#################################################################"
 
-    requiredFiles="crypto-config/peerOrganizations/org1.foo.com/msp/cacerts"
+    requiredFiles="crypto-config/peerOrganizations/%{peers[0].name | lower }.%{peers[0].domain | lower }/msp/cacerts"
     requiredFiles="crypto-config"
     
     if [ ! -d "$requiredFiles" ]; then
