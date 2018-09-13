@@ -1,0 +1,37 @@
+# Copyright by @hoojo
+# hoojo.me@gmail.com
+# create by 2018-09-13
+# hyperledger fabric network generator tools settings
+
+
+# -----------------------------------------------------------------
+# settings: setter output location, orderer & peer Organization
+# -----------------------------------------------------------------
+settings:
+
+  # Output fabric network config directory Generator Settings
+  output: ../networks/
+
+  # Orderer Organization Generator Settings
+  orderers:
+    - name: Orderer1
+      domain: example.com
+      hostnames: [foo, bar]
+
+    - name: Orderer2
+      domain: simple.cn
+      count: 3
+
+  # Peer Organization Generator Settings
+  peers:
+    - name: Org1
+      domain: hoojo.com
+      hostnames: [foo, bar]
+      user_count: 2
+      template_count: 3
+
+    - name: Org2
+      domain: hoojo.com
+      hostnames: [foo, bar]
+      user_count: 2
+      template_count: 3
