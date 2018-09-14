@@ -1,4 +1,10 @@
 %# ==============================================================================================
+%# global variables
+%# ==============================================================================================
+{% set fabric = namespace(orderer_count=0, peer_count=0) %}
+
+
+%# ==============================================================================================
 %# Orderer Organization template
 %# ==============================================================================================
 %# Orderer Organization render client root ca
@@ -9,6 +15,7 @@
 /etc/hyperledger/msp/peer%{peer.name | title}/msp/tlscacerts/tlsca.%{peer_domain }-cert.pem{% if not loop.last %}, {% endif %}
   {% endfor %}
 {% endmacro %}
+
 
 %# ----------------------------------------------------------------------------------------------
 %# Orderer Organization render volumes
@@ -24,12 +31,14 @@
   {% endfor %}
 {% endmacro %}
 
+
 %# ----------------------------------------------------------------------------------------------
 %# Orderer Organization render orderer
 %# ----------------------------------------------------------------------------------------------
 {% macro render_orderer(orderer, domain, hostname) %}
   {% set orderer_host = hostname | lower ~ '.' ~ domain | lower %}
-  %{orderer.name | lower }_%{hostname }:
+  {% set orderer_name = hostname ~ '_' ~ orderer.name | lower if hostname != orderer.name | lower else hostname %}
+  %{orderer_name }:
     container_name: %{orderer_host }
     <<: *orderer-base
     environment:
@@ -50,15 +59,54 @@
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/ordererOrganizations/%{domain }/orderers/%{orderer_host }/:/etc/hyperledger/msp/orderer:ro
 %{ render_orderer_volumes() }
     ports:
-      - 7050:7050
+      - %{fabric.orderer_count + 7}050:7050
+    {% set fabric.orderer_count = fabric.orderer_count + 1 %}
 {% endmacro %}
+
+
 
 %# ==============================================================================================
 %# Peer Organization template
 %# ==============================================================================================
+
+%# ----------------------------------------------------------------------------------------------
+%# peer Organization depends orderer template
+%# ----------------------------------------------------------------------------------------------
+{% macro render_peer_orderer_depend() %}
+  {% for orderer in orderers %}
+    {% if orderer.hostnames is sequence %}
+      {% for hostname in orderer.hostnames %}
+      - %{hostname ~ '_' ~ orderer.name | lower }
+      {% endfor %}
+    {% elif orderer.count > 0 %}
+      {% for index in range(orderer.count) %}
+      - %{orderer.name | lower ~ index }
+      {% endfor %}
+    {% else %}
+      - %{orderer.name | lower }
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% macro render_peer_depend(peer, peer_name) %}
+  {% set depend_peer = none %}
+  {% if peer.hostnames is iterable %}
+    {% set depend_peer = peer.hostnames[0] | lower ~ '_' ~ peer.name | lower %}
+  {% else %}
+    {% set depend_peer = 'peer0_' ~ peer.name | lower %}
+  {% endif %}
+  {% if peer_name != depend_peer %}
+      - %{depend_peer }
+  {% endif %}
+{% endmacro %}
+
+%# ----------------------------------------------------------------------------------------------
+%# peer Organization render orderer
+%# ----------------------------------------------------------------------------------------------
 {% macro render_peer(peer, domain, hostname) %}
   {% set peer_host = hostname | lower ~ '.' ~ domain | lower %}
-  %{hostname}_%{peer.name | lower }:
+  {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
+  %{peer_name }:
     container_name: %{peer_host }
     <<: *peer-base
     environment:
@@ -86,9 +134,20 @@
       - /var/run/:/host/var/run/
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/%{domain }/peers/%{peer_host }/:/etc/hyperledger/msp/peer:ro
     ports:
-      - 7051:7051
-      - 7052:7052
-      - 7053:7053
+      - %{fabric.peer_count + 7}051:7051
+      - %{fabric.peer_count + 7}052:7052
+      - %{fabric.peer_count + 7}053:7053
     depends_on:
-      - orderer
+%{render_peer_orderer_depend() -}
+%{render_peer_depend(peer, peer_name) }
+    {% set fabric.peer_count = fabric.peer_count + 1 %}
+{% endmacro %}
+
+%# ==============================================================================================
+%# Orderer & Peer Organization depends template
+%# ==============================================================================================
+{% macro render_depends(service, count) %}
+  {% for index in range(count) %}
+      - %{service}%{index}
+  {% endfor %}
 {% endmacro %}
