@@ -1,3 +1,9 @@
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+# @changelog hyperledger fabric network generator tools orderer & peer template defined
+
+
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -88,6 +94,7 @@ x-base-services:
       restart_policy:
         condition: on-failure
 
+
 services:
 #-----------------------------------------------------------------------------------
 # orderer_Org1 service yaml
@@ -144,7 +151,6 @@ services:
 
     ports:
       - 8050:7050
-
 
 
 #-----------------------------------------------------------------------------------
@@ -223,7 +229,6 @@ services:
       - foo_org1
 
 
-
 #-----------------------------------------------------------------------------------
 # Org2 service yaml
 #-----------------------------------------------------------------------------------
@@ -298,6 +303,5 @@ services:
       - orderer_org1
       - orderer_org2
       - zyz_org2
-
 
 
