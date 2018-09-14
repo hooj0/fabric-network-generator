@@ -4,7 +4,7 @@
 # @changelog hyperledger fabric network generator tools orderer & peer template defined
 
 
-{% from 'commons-macro/fabric-macro.yaml' import render_orderer, render_peer, render_depends with context %}
+{% from 'commons-macro/fabric-macro.yaml' import render_orderer, render_peer, render_depends, dump_orderers, dump_peers with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -89,39 +89,12 @@ x-base-services:
       restart_policy:
         condition: on-failure
 
+
 services:
-{% for orderer in orderers %}
-#-----------------------------------------------------------------------------------
-# %{orderer.name } service yaml
-#-----------------------------------------------------------------------------------
-  {% if orderer.hostnames is sequence %}
-    {% for hostname in orderer.hostnames %}
-%{ render_orderer(orderer, orderer.domain | lower, hostname | lower) }
-    {% endfor %}
-  {% elif orderer.count > 0 %}
-    {% for index in range(orderer.count) %}
-    {% set hostname = orderer.name | lower ~ index %}
-%{ render_orderer(orderer, orderer.domain | lower, hostname) }
-    {% endfor %}
-  {% else %}
-%{ render_orderer(orderer, orderer.domain | lower, orderer.name | lower) }
-  {% endif %}
-{% endfor %}
+{% call(orderer, domain, hostname) dump_orderers(true) %}
+%{- render_orderer(orderer, domain | lower, hostname | lower) -}
+{% endcall %}
 
-%# =================================================================================
-{% for peer in peers %}
-#-----------------------------------------------------------------------------------
-# %{peer.name } service yaml
-#-----------------------------------------------------------------------------------
-  {% set peer_domain = peer.name | lower ~ '.' ~ peer.domain | lower %}
-  {% if peer.hostnames is iterable %}
-    {% for hostname in peer.hostnames %}
-%{ render_peer(peer, peer_domain, hostname) }
-    {% endfor %}
-  {% else %}
-    {% for index in range(peer.template_count) %}
-%{ render_peer(peer, peer_domain, 'peer' ~ index) }
-    {% endfor %}
-  {% endif %}
-
-{% endfor %}
+{% call(peer, domain, hostname) dump_peers(true) %}
+%{- render_peer(peer, domain | lower, hostname | lower) -}
+{% endcall %}
