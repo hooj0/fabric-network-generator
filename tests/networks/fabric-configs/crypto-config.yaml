@@ -18,6 +18,9 @@ OrdererOrgs:
   #        Country: US
   #        Province: California
   #        Locality: San Francisco
+  # ---------------------------------------------------------------------------
+  # "Specs" - See PeerOrgs below for complete description
+  # ---------------------------------------------------------------------------
   #    Specs:
   #      - Hostname: orderer
 
@@ -27,9 +30,6 @@ OrdererOrgs:
         Country: US
         Province: California
         Locality: San Francisco
-    # ---------------------------------------------------------------------------
-    # "Specs" - See PeerOrgs below for complete description
-    # ---------------------------------------------------------------------------
     Specs:
       - Hostname: foo
       - Hostname: bar
@@ -40,9 +40,6 @@ OrdererOrgs:
         Country: US
         Province: California
         Locality: San Francisco
-    # ---------------------------------------------------------------------------
-    # "Specs" - See PeerOrgs below for complete description
-    # ---------------------------------------------------------------------------
     Specs:
       - Hostname: orderer2
 
@@ -52,9 +49,6 @@ OrdererOrgs:
         Country: US
         Province: California
         Locality: San Francisco
-    # ---------------------------------------------------------------------------
-    # "Specs" - See PeerOrgs below for complete description
-    # ---------------------------------------------------------------------------
     Specs:
       - Hostname: orderer3
 
