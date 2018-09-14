@@ -36,11 +36,12 @@ x-base-services:
     depends_on:
       - zookeeper0
       - zookeeper1
-      - zookeeper2
       - kafka0
       - kafka1
       - kafka2
-      - kafka3    
+      - kafka3
+      - kafka4
+
 
   peer-base: &peer-base
     image: hyperledger/fabric-peer${IMAGE_TAG_FABRIC}
@@ -89,14 +90,14 @@ x-base-services:
 
 services:
 #-----------------------------------------------------------------------------------
-# Orderer service yaml
+# orderer_Org1 service yaml
 #-----------------------------------------------------------------------------------
-  orderer_orderer:
-    container_name: orderer.hoojo.me
+  orderer_org1:
+    container_name: orderer_org1.hoojo.me
     <<: *orderer-base
     environment:
       <<: *orderer-env-common
-      ORDERER_GENERAL_LOCALMSPID: OrdererMSP
+      ORDERER_GENERAL_LOCALMSPID: Orderer_org1MSP
       ORDERER_GENERAL_LOGLEVEL: debug
       ORDERER_GENERAL_TLS_CLIENTROOTCAS: "[/etc/hyperledger/msp/peerOrg1/msp/tlscacerts/tlsca.org1.simple.top-cert.pem, /etc/hyperledger/msp/peerOrg2/msp/tlscacerts/tlsca.org2.example.cn-cert.pem]"
       GRPC_TRACE: all=true,
@@ -109,12 +110,40 @@ services:
       ORDERER_KAFKA_VERBOSE: "true"
     volumes:
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/channel-artifacts:/etc/hyperledger/configtx:ro
-      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/ordererOrganizations/hoojo.me/orderers/orderer.hoojo.me/:/etc/hyperledger/msp/orderer:ro
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/ordererOrganizations/hoojo.me/orderers/orderer_org1.hoojo.me/:/etc/hyperledger/msp/orderer:ro
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org1.simple.top/peers/foo.org1.simple.top/:/etc/hyperledger/msp/peerOrg1:ro
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org2.example.cn/peers/zyz.org2.example.cn/:/etc/hyperledger/msp/peerOrg2:ro
 
     ports:
       - 7050:7050
+
+#-----------------------------------------------------------------------------------
+# orderer_Org2 service yaml
+#-----------------------------------------------------------------------------------
+  orderer_org2:
+    container_name: orderer_org2.hoojo.xyz
+    <<: *orderer-base
+    environment:
+      <<: *orderer-env-common
+      ORDERER_GENERAL_LOCALMSPID: Orderer_org2MSP
+      ORDERER_GENERAL_LOGLEVEL: debug
+      ORDERER_GENERAL_TLS_CLIENTROOTCAS: "[/etc/hyperledger/msp/peerOrg1/msp/tlscacerts/tlsca.org1.simple.top-cert.pem, /etc/hyperledger/msp/peerOrg2/msp/tlscacerts/tlsca.org2.example.cn-cert.pem]"
+      GRPC_TRACE: all=true,
+      GRPC_VERBOSITY: debug
+      ORDERER_GENERAL_AUTHENTICATION_TIMEWINDOW: 3600s #Not for production -- remove.
+
+      # new add Kafka config
+      ORDERER_KAFKA_RETRY_SHORTINTERVAL: 1s
+      ORDERER_KAFKA_RETRY_SHORTTOTAL: 60s
+      ORDERER_KAFKA_VERBOSE: "true"
+    volumes:
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/channel-artifacts:/etc/hyperledger/configtx:ro
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/ordererOrganizations/hoojo.xyz/orderers/orderer_org2.hoojo.xyz/:/etc/hyperledger/msp/orderer:ro
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org1.simple.top/peers/foo.org1.simple.top/:/etc/hyperledger/msp/peerOrg1:ro
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org2.example.cn/peers/zyz.org2.example.cn/:/etc/hyperledger/msp/peerOrg2:ro
+
+    ports:
+      - 8050:7050
 
 
 
@@ -153,7 +182,9 @@ services:
       - 7052:7052
       - 7053:7053
     depends_on:
-      - orderer
+      - orderer_org1
+      - orderer_org2
+
 
   bar_org1:
     container_name: bar.org1.simple.top
@@ -183,11 +214,14 @@ services:
       - /var/run/:/host/var/run/
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org1.simple.top/peers/bar.org1.simple.top/:/etc/hyperledger/msp/peer:ro
     ports:
-      - 7051:7051
-      - 7052:7052
-      - 7053:7053
+      - 8051:7051
+      - 8052:7052
+      - 8053:7053
     depends_on:
-      - orderer
+      - orderer_org1
+      - orderer_org2
+      - foo_org1
+
 
 
 #-----------------------------------------------------------------------------------
@@ -221,11 +255,13 @@ services:
       - /var/run/:/host/var/run/
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org2.example.cn/peers/zyz.org2.example.cn/:/etc/hyperledger/msp/peer:ro
     ports:
-      - 7051:7051
-      - 7052:7052
-      - 7053:7053
+      - 9051:7051
+      - 9052:7052
+      - 9053:7053
     depends_on:
-      - orderer
+      - orderer_org1
+      - orderer_org2
+
 
   abc_org2:
     container_name: abc.org2.example.cn
@@ -255,10 +291,13 @@ services:
       - /var/run/:/host/var/run/
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org2.example.cn/peers/abc.org2.example.cn/:/etc/hyperledger/msp/peer:ro
     ports:
-      - 7051:7051
-      - 7052:7052
-      - 7053:7053
+      - 10051:7051
+      - 10052:7052
+      - 10053:7053
     depends_on:
-      - orderer
+      - orderer_org1
+      - orderer_org2
+      - zyz_org2
+
 
 
