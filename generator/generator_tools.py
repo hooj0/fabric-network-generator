@@ -140,7 +140,6 @@ class TemplateEngine(object):
 class GenFabricNetworkTools(object):
 
     def gen_crypot_config(self, orderers, peers):
-
         if orderers is None:
             orderers = [OrdererOrg()]
 
@@ -150,7 +149,6 @@ class GenFabricNetworkTools(object):
         TemplateEngine.generator("networks", "fabric-configs/crypto-config.yaml", dict(orderers=orderers, peers=peers))
 
     def gen_configtx(self, orderers, peers):
-
         if orderers is None:
             orderers = [OrdererOrg()]
 
@@ -160,7 +158,6 @@ class GenFabricNetworkTools(object):
         TemplateEngine.generator("networks", "fabric-configs/configtx.yaml", dict(orderers=orderers, peers=peers))
 
     def gen_generate_shell(self, peers):
-
         if peers is None:
             peers = [PeerOrg('Org1'), PeerOrg('Org2')]
 
