@@ -35,6 +35,13 @@ settings:
       user_count: 2
       template_count: 2
 
+  ca:
+    domain: hoojo.me
 
-  zookeepeer_count: 3
-  kafka_count: 4
+  zookeeper:
+    domain: simple.xyz
+    count: 3
+
+  kafka:
+    domain: simple.top
+    count: 3
