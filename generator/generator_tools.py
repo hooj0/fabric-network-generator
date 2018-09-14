@@ -162,3 +162,15 @@ class GenFabricNetworkTools(object):
             peers = [PeerOrg('Org1'), PeerOrg('Org2')]
 
         TemplateEngine.generator("networks", "fabric-configs/generate.sh", dict(peers=peers))
+
+    def gen_fabric_compose(self, orderers, peers):
+        if orderers is None:
+            orderers = [OrdererOrg()]
+
+        if peers is None:
+            peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
+
+        TemplateEngine.generator("networks", "docker-compose-fabric.yaml", dict(orderers=orderers, peers=peers))
+
+
+GenFabricNetworkTools().gen_fabric_compose(None, None)
