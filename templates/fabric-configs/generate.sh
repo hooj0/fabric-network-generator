@@ -1,4 +1,9 @@
 #!/bin/bash
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-13
+# @changelog hyperledger fabric network generator tools crypto & channel & block generator
+
 
 #set -e
 #set -uo pipefail
