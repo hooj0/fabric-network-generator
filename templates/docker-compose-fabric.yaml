@@ -1,4 +1,4 @@
-{% from 'commons-macro/fabric-macro.yaml' import render_orderer, render_peer with context %}
+{% from 'commons-macro/fabric-macro.yaml' import render_orderer, render_peer, render_depends with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -35,13 +35,8 @@ x-base-services:
       #placement:
       #  constraints: [node.role == manager]
     depends_on:
-      - zookeeper0
-      - zookeeper1
-      - zookeeper2
-      - kafka0
-      - kafka1
-      - kafka2
-      - kafka3    
+%{ render_depends('zookeeper', zookeeper_count) -}
+%{ render_depends('kafka', kafka_count) }
 
   peer-base: &peer-base
     image: hyperledger/fabric-peer${IMAGE_TAG_FABRIC}
