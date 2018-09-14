@@ -26,7 +26,7 @@ from random import choice
 class AppLog(object):
     """
     examples
-        print("\033[0;37;40m\t方倍实验室\033[0m")
+        print("\033[0;37;40m\t this is message.\033[0m")
 
     数值表示的参数含义：
         显示方式: 0（默认\）、1（高亮）、22（非粗体）、4（下划线）、24（非下划线）、 5（闪烁）、25（非闪烁）、7（反显）、27（非反显）
