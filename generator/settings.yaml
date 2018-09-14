@@ -36,5 +36,5 @@ settings:
       template_count: 2
 
 
-  zookeepeer: 3
-  kafka: 4
+  zookeepeer_count: 3
+  kafka_count: 4
