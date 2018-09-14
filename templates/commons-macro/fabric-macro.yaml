@@ -1,3 +1,9 @@
+%# hyperledger fabric network generator tools
+%# Copyright by @hoojo
+%# hoojo.me@gmail.com create by 2018-09-12
+%# @changelog hyperledger fabric network generator tools peer & orderer macro defined
+
+
 %# ==============================================================================================
 %# global variables
 %# ==============================================================================================
@@ -29,6 +35,21 @@
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/%{peer_domain }/peers/peer0.%{peer_domain }/:/etc/hyperledger/msp/peer%{peer.name | title}:ro
     {% endif %}
   {% endfor %}
+{% endmacro %}
+
+
+%# ----------------------------------------------------------------------------------------------
+%# Orderer Organization render network
+%# ----------------------------------------------------------------------------------------------
+{% macro render_orderer_network(orderer, domain, hostname) %}
+  {% set orderer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set orderer_name = hostname ~ '_' ~ orderer.name | lower if hostname != orderer.name | lower else hostname %}
+  %{orderer_name }:
+    hostname: %{orderer_host }
+    networks:
+      blockchain_net:
+        aliases:
+          - %{orderer_host }
 {% endmacro %}
 
 
@@ -88,6 +109,7 @@
   {% endfor %}
 {% endmacro %}
 
+
 {% macro render_peer_depend(peer, peer_name) %}
   {% set depend_peer = none %}
   {% if peer.hostnames is iterable %}
@@ -99,6 +121,22 @@
       - %{depend_peer }
   {% endif %}
 {% endmacro %}
+
+
+%# ----------------------------------------------------------------------------------------------
+%# peer Organization render network
+%# ----------------------------------------------------------------------------------------------
+{% macro render_peer_network(peer, domain, hostname) %}
+  {% set peer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
+  %{peer_name }:
+    hostname: %{peer_host }
+    networks:
+      blockchain_net:
+        aliases:
+          - %{peer_host }
+{% endmacro %}
+
 
 %# ----------------------------------------------------------------------------------------------
 %# peer Organization render orderer
@@ -142,6 +180,7 @@
 %{render_peer_depend(peer, peer_name) }
     {% set fabric.peer_count = fabric.peer_count + 1 %}
 {% endmacro %}
+
 
 %# ==============================================================================================
 %# Orderer & Peer Organization depends template
