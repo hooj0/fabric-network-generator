@@ -11,6 +11,53 @@
 
 
 %# ==============================================================================================
+%# global call macro
+%# ==============================================================================================
+{% macro dump_orderers(is_header=false) %}
+  {% for orderer in orderers %}
+{% if is_header %}
+#-----------------------------------------------------------------------------------
+# %{orderer.name } service yaml
+#-----------------------------------------------------------------------------------
+{% endif %}
+    {% if orderer.hostnames is sequence %}
+      {% for hostname in orderer.hostnames %}
+%{ caller(orderer, orderer.domain | lower, hostname | lower) }
+      {% endfor %}
+    {% elif orderer.count > 0 %}
+      {% for index in range(orderer.count) %}
+      {% set hostname = orderer.name | lower ~ index %}
+%{ caller(orderer, orderer.domain | lower, hostname) }
+      {% endfor %}
+    {% else %}
+%{ caller(orderer, orderer.domain | lower, orderer.name | lower) }
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro dump_peers(is_header=false) %}
+  {% for peer in peers %}
+{% if is_header %}
+#-----------------------------------------------------------------------------------
+# %{peer.name } service yaml
+#-----------------------------------------------------------------------------------
+{% endif %}
+    {% set peer_domain = peer.name | lower ~ '.' ~ peer.domain | lower %}
+    {% if peer.hostnames is iterable %}
+      {% for hostname in peer.hostnames %}
+%{ caller(peer, peer_domain, hostname) }
+      {% endfor %}
+    {% else %}
+      {% for index in range(peer.template_count) %}
+%{ caller(peer, peer_domain, 'peer' ~ index) }
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+
+%# ==============================================================================================
 %# Orderer Organization template
 %# ==============================================================================================
 %# Orderer Organization render client root ca
