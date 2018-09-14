@@ -1,3 +1,5 @@
+{% from 'commons-macro/fabric-macro.yaml' import render_depends with context %}
+{% from 'commons-macro/zk-macro.yaml' import render_zookeeper_servers, render_kafka_zookeeper_connect with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -8,7 +10,8 @@ x-base-services:
     image: hyperledger/fabric-zookeeper${IMAGE_TAG_FABRIC_ZOOKEEPER}
     environment: &zookeeper-env-common
       ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+      #ZOO_SERVERS: server.1=zookeeper0:2888:3888 server.2=zookeeper1:2888:3888 server.3=zookeeper2:2888:3888
+      ZOO_SERVERS: %{render_zookeeper_servers() }
     expose:
       - 2181
       - 2888
@@ -38,7 +41,8 @@ x-base-services:
       KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 10000
       #zookeeper.session.timeout.ms
       KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: 10000
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+      #KAFKA_ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+      KAFKA_ZOOKEEPER_CONNECT: %{render_kafka_zookeeper_connect() }
     expose:
       - 9092    
     deploy: &kafka-deploy-common
@@ -54,61 +58,28 @@ x-base-services:
       #placement:
       #  constraints: [node.role == manager]
     depends_on:
-      - zookeeper0
-      - zookeeper1
-      - zookeeper2      
+%{ render_depends('zookeeper', zookeeper_count) -}
 
 #-----------------------------------------------------------------------------------
 # kafka & zookeeper service yaml
 #-----------------------------------------------------------------------------------
 services:
-  zookeeper0:
-    container_name: zookeeper0
+{% for index in range(zookeeper_count) %}
+  zookeeper%{index}:
+    container_name: zookeeper%{index}
     <<: *zookeeper-base
     environment:
       <<: *zookeeper-env-common
-      ZOO_MY_ID: 1
+      ZOO_MY_ID: %{loop.index }
 
-  zookeeper1:
-    container_name: zookeeper1
-    <<: *zookeeper-base
-    environment:
-      <<: *zookeeper-env-common
-      ZOO_MY_ID: 2
+{% endfor %}
 
-  zookeeper2:
-    container_name: zookeeper2
-    <<: *zookeeper-base
-    environment:
-      <<: *zookeeper-env-common
-      ZOO_MY_ID: 3  
-
-  kafka0:
-    container_name: kafka0
+{% for index in range(kafka_count) %}
+  kafka%{index}:
+    container_name: kafka%{index}
     <<: *kafka-base
     environment:
       <<: *kafka-env-common
-      KAFKA_BROKER_ID: 0
-  
-  kafka1:
-    container_name: kafka1
-    <<: *kafka-base
-    environment:
-      <<: *kafka-env-common
-      KAFKA_BROKER_ID: 1
- 
+      KAFKA_BROKER_ID: %{index}
 
-  kafka2:
-    container_name: kafka2
-    <<: *kafka-base
-    environment:
-      <<: *kafka-env-common
-      KAFKA_BROKER_ID: 2
- 
-
-  kafka3:
-    container_name: kafka3
-    <<: *kafka-base
-    environment:
-      <<: *kafka-env-common
-      KAFKA_BROKER_ID: 3
+{% endfor %}
