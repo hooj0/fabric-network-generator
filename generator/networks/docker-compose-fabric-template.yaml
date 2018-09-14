@@ -1,0 +1,228 @@
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+# @changelog hyperledger fabric network generator tools fabric template defined
+
+version: '3.6'
+
+#-----------------------------------------------------------------------------------
+# base service yaml
+#-----------------------------------------------------------------------------------
+x-base-services:
+  ca: &ca-base
+    image: hyperledger/fabric-ca${IMAGE_TAG_FABRIC_CA}
+    environment: &ca-env-common
+      FABRIC_CA_HOME: /etc/hyperledger/fabric-ca-server
+      FABRIC_CA_SERVER_TLS_ENABLED: ${HYPERLEDGER_FABRIC_ENABLE_TLS}
+    deploy: &ca-deploy-common
+      #mode: global
+      mode: replicated
+      replicas: 4
+      #resources:
+        #limits:
+          #cpus: "0.2"
+          #memory: 2000M
+      restart_policy:
+        condition: on-failure   
+
+
+#-----------------------------------------------------------------------------------
+# networks yaml
+#-----------------------------------------------------------------------------------
+networks:
+  blockchain_net:
+    driver: overlay
+    attachable: true
+
+
+#-----------------------------------------------------------------------------------
+# core service yaml
+#-----------------------------------------------------------------------------------
+services:
+  ca0:
+    container_name: ca.org1.simple.top
+    hostname: ca.foo.com
+    <<: *ca-base
+    environment:
+      <<: *ca-env-common
+      FABRIC_CA_SERVER_CA_NAME: ca-org1
+      FABRIC_CA_SERVER_TLS_KEYFILE: /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
+      FABRIC_CA_SERVER_TLS_CERTFILE: /etc/hyperledger/fabric-ca-server-config/ca.org1.simple.top-cert.pem
+    command: sh -c "fabric-ca-server start ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.simple.top-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d"
+    #command: sh -c "fabric-ca-server start -n ca-org1 ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.simple.top-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw ${HYPERLEDGER_FABRIC_ENABLE_CA_TLS} --tls.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.simple.top-cert.pem --tls.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -d"
+    ports:
+      - "7054:7054"
+    volumes:
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org1.simple.top/ca/:/etc/hyperledger/fabric-ca-server-config:ro
+    networks:
+      blockchain_net:
+        aliases:
+          - ca.org1.simple.top
+
+  ca1:
+    container_name: ca.org2.example.cn
+    hostname: ca.foo.com
+    <<: *ca-base
+    environment:
+      <<: *ca-env-common
+      FABRIC_CA_SERVER_CA_NAME: ca-org2
+      FABRIC_CA_SERVER_TLS_KEYFILE: /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY
+      FABRIC_CA_SERVER_TLS_CERTFILE: /etc/hyperledger/fabric-ca-server-config/ca.org2.example.cn-cert.pem
+    command: sh -c "fabric-ca-server start ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.cn-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY -b admin:adminpw -d"
+    #command: sh -c "fabric-ca-server start -n ca-org2 ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.cn-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY -b admin:adminpw ${HYPERLEDGER_FABRIC_ENABLE_CA_TLS} --tls.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.cn-cert.pem --tls.keyfile /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY -d"
+    ports:
+      - "7054:7054"
+    volumes:
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/org2.example.cn/ca/:/etc/hyperledger/fabric-ca-server-config:ro
+    networks:
+      blockchain_net:
+        aliases:
+          - ca.org2.example.cn
+
+
+#-----------------------------------------------------------------------------------
+# tools service yaml
+#-----------------------------------------------------------------------------------  
+  configtxlator:
+    container_name: configtxlator.com
+    hostname: configtxlator.com
+    image: hyperledger/fabric-tools${IMAGE_TAG_FABRIC}    
+    command: /usr/local/bin/configtxlator start
+    ports:
+      - "7059:7059"
+    networks:
+      blockchain_net:
+        aliases:
+          - configtxlator.com
+    deploy:
+      replicas: 2
+      #resources:
+        #limits:
+          #cpus: "0.1"
+          #memory: 500M
+      restart_policy:
+        condition: on-failure  
+
+  ccenv:
+    container_name: ccenv
+    image: hyperledger/fabric-ccenv${IMAGE_TAG_FABRIC}
+    networks:
+      - blockchain_net
+    deploy:
+      replicas: 2
+      #resources:
+        #limits:
+          #cpus: "0.1"
+          #memory: 2000M
+      restart_policy:
+        condition: on-failure
+
+
+#-----------------------------------------------------------------------------------
+# zookeeper service yaml
+#-----------------------------------------------------------------------------------
+  zookeeper0:
+    hostname: zookeeper0.simple.top
+    networks:
+      blockchain_net:
+        aliases:
+          - zookeeper0.simple.top
+
+  zookeeper1:
+    hostname: zookeeper1.simple.top
+    networks:
+      blockchain_net:
+        aliases:
+          - zookeeper1.simple.top
+
+  zookeeper2:
+    hostname: zookeeper2.simple.top
+    networks:
+      blockchain_net:
+        aliases:
+          - zookeeper2.simple.top
+
+
+#-----------------------------------------------------------------------------------
+# kafka service yaml
+#-----------------------------------------------------------------------------------
+  kafka0:
+    hostname: kafka0.simple.xyz
+    networks:
+      blockchain_net:
+        aliases:
+          - kafka0.simple.xyz
+
+  kafka1:
+    hostname: kafka1.simple.xyz
+    networks:
+      blockchain_net:
+        aliases:
+          - kafka1.simple.xyz
+
+  kafka2:
+    hostname: kafka2.simple.xyz
+    networks:
+      blockchain_net:
+        aliases:
+          - kafka2.simple.xyz
+
+  kafka3:
+    hostname: kafka3.simple.xyz
+    networks:
+      blockchain_net:
+        aliases:
+          - kafka3.simple.xyz
+
+
+#-----------------------------------------------------------------------------------
+# orderer & peer service yaml
+#-----------------------------------------------------------------------------------
+  orderer_org1:
+    hostname: orderer_org1.hoojo.me
+    networks:
+      blockchain_net:
+        aliases:
+          - orderer_org1.hoojo.me
+
+
+  orderer_org2:
+    hostname: orderer_org2.hoojo.xyz
+    networks:
+      blockchain_net:
+        aliases:
+          - orderer_org2.hoojo.xyz
+
+
+
+
+  foo_org1:
+    hostname: foo.org1.simple.top
+    networks:
+      blockchain_net:
+        aliases:
+          - foo.org1.simple.top
+
+  bar_org1:
+    hostname: bar.org1.simple.top
+    networks:
+      blockchain_net:
+        aliases:
+          - bar.org1.simple.top
+
+
+  zyz_org2:
+    hostname: zyz.org2.example.cn
+    networks:
+      blockchain_net:
+        aliases:
+          - zyz.org2.example.cn
+
+  abc_org2:
+    hostname: abc.org2.example.cn
+    networks:
+      blockchain_net:
+        aliases:
+          - abc.org2.example.cn
+
+
