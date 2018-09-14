@@ -1,3 +1,9 @@
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+# @changelog hyperledger fabric network generator tools fabric template defined
+
+{% from 'commons-macro/fabric-macro.yaml' import dump_peers with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -27,76 +33,35 @@ x-base-services:
 # couchdb & peer service yaml
 #-----------------------------------------------------------------------------------
 services:
-  couchdb0:
-    container_name: couchdb0
-    hostname: couchdb0.simple.com
-    <<: *couchdb-base
-    ports:
-      - "5984:5984"
-    networks:
-      blockchain_net:
-        aliases:
-          - couchdb0.simple.com
+{% set ns = namespace(first_peer=true) %}
 
-  couchdb1:
-    container_name: couchdb1
-    hostname: couchdb1.simple.com
-    <<: *couchdb-base
-    networks:
-      blockchain_net:
-        aliases:
-          - couchdb1.simple.com
+{% call(peer, domain, hostname, loop) dump_peers() %}
+  {% set peer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
+  couchdb_%{peer_name | lower }:
+    container_name: couchdb.%{peer_host }
+        hostname: couchdb.%{peer_host }
+        <<: *couchdb-base
+    {% if ns.first_peer %}
+        {% set ns.first_peer = false %}
+        ports:
+          - "5984:5984"
+    {% endif %}
+        networks:
+          blockchain_net:
+            aliases:
+              - couchdb.%{peer_host }
+{% endcall %}
 
-  couchdb2:
-    container_name: couchdb2
-    hostname: couchdb2.simple.com
-    <<: *couchdb-base
-    networks:
-      blockchain_net:
-        aliases:
-          - couchdb2.simple.com
-
-  couchdb3:
-    container_name: couchdb3
-    hostname: couchdb3.simple.com
-    <<: *couchdb-base
-    networks:
-      blockchain_net:
-        aliases:
-          - couchdb3.simple.com
-
-  peer0_org1:
+{% call(peer, domain, hostname) dump_peers(true) %}
+  {% set peer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
+  %{peer_name }:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb_%{peer_name | lower }:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     depends_on:
-      - couchdb0
-      
-  peer1_org1:
-    environment:
-      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
-    depends_on:
-      - couchdb1  
-      
-  peer0_org2:
-    environment:
-      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
-    depends_on:
-      - couchdb2  
-      
-  peer1_org2:
-    environment:
-      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
-    depends_on:
-      - couchdb3  
+      - couchdb_%{peer_name | lower }
+{% endcall %}
