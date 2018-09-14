@@ -36,25 +36,9 @@ class AppLog(object):
 
     __color_list = [31, 32, 33, 34, 35, 36]
 
-    @staticmethod
-    def line(message=None, char='=', width=120):
-
-        if message:
-            message = message.center(len(message) + 4).center(width, char)
-
-            print(AppLog.random_color(message))
-        else:
-            print(AppLog.random_color(char * width))
-
-    @staticmethod
-    def random_color(message):
-
-        return '\033[1;%sm%s\033[0m' % (choice(AppLog.__color_list), message)
-
     def __log(message, level='DEBUG', line_before=False, line_after=False):
-
         width = len(message) + 20
-        line = AppLog.random_color("=" * width)
+        line = AppLog.color_text("=" * width)
 
         if line_before:
             print(line)
@@ -74,32 +58,69 @@ class AppLog(object):
             print(line)
 
     @staticmethod
-    def info(message, line_before=False, line_after=False):
+    def color_random():
+        return '\033[1;' + str(choice(AppLog.__color_list)) + 'm%s\033[0m'
 
+    @staticmethod
+    def color_text(message):
+        return AppLog.color_random() % message
+
+    @staticmethod
+    def line(message=None, char='=', width=120):
+        if message:
+            message = message.center(len(message) + 4).center(width, char)
+
+            print(AppLog.color_text(message))
+        else:
+            print(AppLog.color_text(char * width))
+
+    @staticmethod
+    def title(content, char="=", width=120):
+        AppLog.titles([content], char, width)
+
+    @staticmethod
+    def titles(contents, char="=", width=120, align='center'):
+        padding = 30
+        width = min(160, width)
+
+        line = char * width
+        color = AppLog.color_random()
+
+        print(color % line)
+        for content in contents:
+            if len(content) > width - padding:
+                content = content[0:width - padding - 8] + "......"
+
+            if align == 'center':
+                title = content.center(width - padding).center(width, char)
+            else:
+                content = " " + content
+                title = content.ljust(width - padding).center(width, char)
+
+            print(color % title)
+        print(color % line)
+
+    @staticmethod
+    def info(message, line_before=False, line_after=False):
         AppLog.__log(message, 'INFO', line_before, line_after)
 
     @staticmethod
     def warn(message, line_before=False, line_after=False):
-
         AppLog.__log(message, 'WARN', line_before, line_after)
 
     @staticmethod
     def debug(message, line_before=False, line_after=False):
-
         AppLog.__log(message, 'DEBUG', line_before, line_after)
 
     @staticmethod
     def error(message, line_before=False, line_after=False):
-
         AppLog.__log(message, 'ERROR', line_before, line_after)
 
     @staticmethod
     def out(message, action='TRACE', line_before=False, line_after=False):
-
         AppLog.__log(message, action, line_before, line_after)
 
     @staticmethod
     def done(action):
-
         print("\n\033[1;33m%s\033[0m %s \033[1;32m%s\033[0m\n" % (action, '.' * 20, 'Done!'))
 
