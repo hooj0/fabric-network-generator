@@ -172,5 +172,8 @@ class GenFabricNetworkTools(object):
 
         TemplateEngine.generator("networks", "docker-compose-fabric.yaml", dict(orderers=orderers, peers=peers, zookeeper_count=2, kafka_count=5))
 
+    def gen_zookeeper_kafka(self, zookeeper_count=3, kafka_count=4):
+        TemplateEngine.generator("networks", "docker-compose-zookeeper-kafka.yaml", dict(zookeeper_count=zookeeper_count, kafka_count=kafka_count))
 
-GenFabricNetworkTools().gen_fabric_compose(None, None)
+
+GenFabricNetworkTools().gen_zookeeper_kafka()
