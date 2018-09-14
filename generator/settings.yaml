@@ -32,6 +32,5 @@ settings:
 
     - name: Org2
       domain: hoojo.com
-      hostnames: [foo, bar]
       user_count: 2
-      template_count: 3
+      template_count: 2
