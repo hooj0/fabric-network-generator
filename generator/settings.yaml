@@ -34,3 +34,7 @@ settings:
       domain: hoojo.com
       user_count: 2
       template_count: 2
+
+
+  zookeepeer: 3
+  kafka: 4
