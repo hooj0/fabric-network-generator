@@ -165,9 +165,19 @@ Orderer: &OrdererDefaults
     OrdererType: kafka
 
     Addresses:
-      {% for orderer in orderers %}
+    {% for orderer in orderers %}
+      {% if orderer.hostnames is sequence %}
+        {% for hostname in orderer.hostnames %}
+        - %{hostname | lower }.%{orderer.domain | lower}:7050
+        {% endfor %}
+      {% elif orderer.count > 0 %}
+        {% for index in range(orderer.count) %}
+        - %{orderer.name | lower }%{index }.%{orderer.domain | lower}:7050
+        {% endfor %}
+      {% else %}
         - %{orderer.name | lower }.%{orderer.domain | lower}:7050
-      {% endfor %}
+      {% endif %}
+    {% endfor %}
 
     # Batch Timeout: The amount of time to wait before creating a batch.
     BatchTimeout: 2s
