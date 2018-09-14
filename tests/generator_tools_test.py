@@ -24,10 +24,9 @@ from generator.generator_tools import PeerOrg
 from generator.generator_tools import GenFabricNetworkTools
 
 
-class TestStringMethods(unittest.TestCase):
-
-    orderers = []
-    peers = []
+class TestGenFabricNetworkTools(unittest.TestCase):
+    orderers = None
+    peers = None
 
     def setUp(self):
         print('init by setUp...')
@@ -48,15 +47,12 @@ class TestStringMethods(unittest.TestCase):
         print('end by tearDown...')
 
     def test_gen_crypot_config(self):
-
         GenFabricNetworkTools().gen_crypot_config(self.orderers, self.peers)
 
     def test_gen_configtx(self):
-
         GenFabricNetworkTools().gen_configtx(self.orderers, self.peers)
 
     def test_gen_generate_shell(self):
-
         GenFabricNetworkTools().gen_generate_shell(self.peers)
 
 
@@ -66,7 +62,7 @@ if __name__ == '__main__':
     # unittest.main()
 
     # 装载测试用例
-    test_cases = unittest.TestLoader().loadTestsFromTestCase(TestStringMethods)
+    test_cases = unittest.TestLoader().loadTestsFromTestCase(TestGenFabricNetworkTools)
 
     # 使用测试套件并打包测试用例
     test_suit = unittest.TestSuite()
@@ -76,7 +72,7 @@ if __name__ == '__main__':
     test_result = unittest.TextTestRunner(verbosity=2).run(test_suit)
 
     # 生成测试报告
-    print("testsRun:%s" % test_result.testsRun)
-    print("failures:%s" % len(test_result.failures))
-    print("errors:%s" % len(test_result.errors))
-    print("skipped:%s" % len(test_result.skipped))
+    print("testsRun: %s" % test_result.testsRun)
+    print("failures: %s" % len(test_result.failures))
+    print("errors: %s" % len(test_result.errors))
+    print("skipped: %s" % len(test_result.skipped))
