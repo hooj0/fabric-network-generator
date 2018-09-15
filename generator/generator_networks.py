@@ -25,6 +25,7 @@ from jinja2 import FileSystemLoader
 from jinja2 import select_autoescape
 from generator.app_log import AppLog as log
 import os
+import shutil
 
 
 class OrdererOrg(object):
@@ -199,4 +200,12 @@ class GenFabricNetworkTools(object):
             peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
         TemplateEngine.generator("networks", "docker-compose-fabric-monitor.yaml", dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers))
 
-GenFabricNetworkTools().gen_monitor(None, None)
+
+class GeneratorTools(object):
+
+    def copy_network_files(self):
+        config_path = os.path.join(os.path.dirname(__file__), 'templates')
+        print(config_path)
+        shutil.copytree('./templates', 'networks/')
+
+GeneratorTools().copy_network_files()
