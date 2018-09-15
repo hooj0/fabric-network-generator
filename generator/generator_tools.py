@@ -191,5 +191,12 @@ class GenFabricNetworkTools(object):
             peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
         TemplateEngine.generator("networks", "docker-compose-couch.yaml", dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers))
 
+    def gen_monitor(self, orderers, peers, zookeeper={'domain': 'simple.top', 'count': 3}, kafka={'domain': 'simple.xyz', 'count': 4}):
+        if orderers is None:
+            orderers = [OrdererOrg('orderer_Org1'), OrdererOrg('orderer_Org2', domain='hoojo.xyz')]
 
-GenFabricNetworkTools().gen_couchdb(None, None)
+        if peers is None:
+            peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
+        TemplateEngine.generator("networks", "docker-compose-fabric-monitor.yaml", dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers))
+
+GenFabricNetworkTools().gen_monitor(None, None)
