@@ -3,7 +3,7 @@
 # hoojo.me@gmail.com create by 2018-09-12
 # @changelog hyperledger fabric network generator tools fabric template defined
 
-{% from 'commons-macro/fabric-macro.yaml' import dump_peers with context %}
+{% from 'commons-macro/global-macro.yaml' import dump_peers with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
