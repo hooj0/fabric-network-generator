@@ -1,3 +1,8 @@
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+# @changelog hyperledger fabric network generator tools zookeeper & kafka template defined
+
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -39,8 +44,8 @@ x-base-services:
       KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 10000
       #zookeeper.session.timeout.ms
       KAFKA_ZOOKEEPER_SESSION_TIMEOUT_MS: 10000
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
       #KAFKA_ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
     expose:
       - 9092    
     deploy: &kafka-deploy-common
