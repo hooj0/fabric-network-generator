@@ -2,15 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18c4ae78-931b-4beb-9030-89fa102871ac" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-fabric.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generator/networks/docker-compose-fabric.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-zookeeper-kafka.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generator/networks/docker-compose-zookeeper-kafka.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/commons-macro/global-macro.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/commons-macro/zk-macro.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-fabric.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-fabric.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generator/generator_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/generator/generator_tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/chaincode-endorsement-policy.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/docker-compose-couch.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/docker-compose-fabric-monitor.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/docker-compose-fabric-template.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/docker-compose-fabric.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/docker-compose-prom.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/docker-compose-visualizer.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/docker-compose-zookeeper-kafka.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/fabric-configs/configtx.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/fabric-configs/crypto-config.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/fabric-configs/generate.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/network-configs/network-config-tls.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/network-configs/network-config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/scripts/log.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/scripts/wait-for-it.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/setup-network.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,7 +38,7 @@
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_generator_tools_test_TestStringMethods_test_gen_generate_shell.coverage" NAME="Unittests for generator_tools_test.TestStringMethods.test_gen_generate_shell Coverage Results" MODIFIED="1536890077553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_te_TestStringMethods_test_upper.coverage" NAME="Unittests for te.TestStringMethods.test_upper Coverage Results" MODIFIED="1536830460577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_te_TestStringMethods.coverage" NAME="Unittests for te.TestStringMethods Coverage Results" MODIFIED="1536830121264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/fabric_network_generator$generator_tools.coverage" NAME="generator_tools Coverage Results" MODIFIED="1537016142851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/generator" />
+    <SUITE FILE_PATH="coverage/fabric_network_generator$generator_tools.coverage" NAME="generator_tools Coverage Results" MODIFIED="1537017188263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/generator" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -52,14 +61,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="generator_tools.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="generator_tools.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generator/generator_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="194" column="35" selection-start-line="194" selection-start-column="35" selection-end-line="194" selection-end-column="35" />
+            <state relative-caret-position="577">
+              <caret line="199" column="80" selection-start-line="199" selection-start-column="80" selection-end-line="199" selection-end-column="80" />
               <folding>
                 <element signature="e#879#909#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="docker-compose-fabric-monitor.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="docker-compose-visualizer.yaml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/docker-compose-visualizer.yaml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="docker-compose-fabric-template.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="135" lean-forward="true" selection-end-line="5" selection-end-column="135" />
             </state>
           </provider>
         </entry>
@@ -130,6 +162,7 @@
         <option value="$PROJECT_DIR$/templates/docker-compose-couch.yaml" />
         <option value="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" />
         <option value="$PROJECT_DIR$/generator/generator_tools.py" />
+        <option value="$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml" />
       </list>
     </option>
   </component>
@@ -182,12 +215,6 @@
               <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
               <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="network-configs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -388,7 +415,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1536738869841</updated>
-      <workItem from="1536738876598" duration="71957000" />
+      <workItem from="1536738876598" duration="73683000" />
     </task>
     <servers />
   </component>
@@ -425,11 +452,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71957000" />
+    <option name="totallyTimeSpent" value="73683000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="12" />
       <window_info anchor="bottom" id="Messages" order="0" />
@@ -441,7 +467,7 @@
       <window_info anchor="bottom" id="Version Control" order="5" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.3298292" />
       <window_info id="Designer" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49934298" weight="0.24236111" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49934298" visible="true" weight="0.24236111" />
       <window_info anchor="bottom" id="Docker" order="1" />
       <window_info anchor="right" id="Database" order="1" weight="0.3295129" />
       <window_info anchor="right" id="SciView" order="0" weight="0.3295129" />
@@ -456,32 +482,6 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" order="1" />
-      <window_info anchor="bottom" x="0" y="125" width="1440" height="610" id="Run" order="8" weight="0.8935611" />
-      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49934298" visible="true" weight="0.24236111" />
-      <window_info id="Structure" order="3" sideWeight="0.500657" side_tool="true" weight="0.24236111" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" />
-      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="5" />
-      <window_info id="Designer" order="1" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
-      <window_info anchor="right" id="Database" order="1" weight="0.3295129" />
-      <window_info anchor="right" id="Palette&#9;" order="5" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.3298292" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.3298292" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="right" id="SciView" order="0" weight="0.3295129" />
-      <window_info anchor="bottom" id="Find" order="7" />
-      <window_info anchor="bottom" id="Messages" order="0" />
-      <window_info anchor="right" id="Maven Projects" order="2" weight="0.3295129" />
-      <window_info id="Favorites" order="0" sideWeight="0.501355" side_tool="true" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -606,9 +606,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-visualizer.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/generator_tools_test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
@@ -633,13 +630,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/setup-network.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4920">
-          <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/fabric-configs/generate.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -652,24 +642,10 @@
         <state relative-caret-position="-4328" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="63" lean-forward="true" selection-start-line="63" selection-end-line="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/commons-macro/zk-macro.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="32" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10">
-          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -687,13 +663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/commons-macro/global-macro.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="382">
@@ -701,15 +670,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="124" selection-start-line="124" selection-end-line="127" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/generator/generator_tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="194" column="35" selection-start-line="194" selection-start-column="35" selection-end-line="194" selection-end-column="35" />
+        <state relative-caret-position="577">
+          <caret line="199" column="80" selection-start-line="199" selection-start-column="80" selection-end-line="199" selection-end-column="80" />
           <folding>
             <element signature="e#879#909#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="135" lean-forward="true" selection-end-line="5" selection-end-column="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setup-network.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="248" column="66" lean-forward="true" selection-start-line="248" selection-start-column="66" selection-end-line="248" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-visualizer.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
