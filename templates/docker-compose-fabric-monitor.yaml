@@ -1,3 +1,9 @@
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+# @changelog hyperledger fabric network generator tools fabric monitor network template defined
+
+{% from 'commons-macro/global-macro.yaml' import dump_orderers, dump_peers with context %}
 version: '3.6'
 
 networks:
@@ -6,66 +12,57 @@ networks:
       name: monitor_net
 
 services:
+#-----------------------------------------------------------------------------------
+# ca service yaml
+#-----------------------------------------------------------------------------------
   # 0.1
-  ca0:
+{% for peer in peers %}
+  ca%{loop.index0 }:
     networks:
       - external_monitor_net    
+{% endfor %}
 
-  ca1:
+#-----------------------------------------------------------------------------------
+# zookeeper service yaml
+#-----------------------------------------------------------------------------------
+  # 0.15
+{% for index in range(zookeeper.count) %}
+  zookeeper%{ index }:
     networks:
       - external_monitor_net
-  
-  # 0.15  
-  zookeeper0:
-    networks:
-      - external_monitor_net
+{% endfor %}
 
-  zookeeper1:
-    networks:
-      - external_monitor_net
-
-  zookeeper2:
-    networks:
-      - external_monitor_net
-  
+#-----------------------------------------------------------------------------------
+# kafka service yaml
+#-----------------------------------------------------------------------------------
   # 0.2
-  kafka0:
+{% for index in range(kafka.count) %}
+  kafka%{ index }:
     networks:
       - external_monitor_net
+{% endfor %}
 
-  kafka1:
-    networks:
-      - external_monitor_net
-
-  kafka2:
-    networks:
-      - external_monitor_net
-
-  kafka3:
-    networks:
-      - external_monitor_net
-
+%#-----------------------------------------------------------------------------------
+%# orderer service yaml
+%#-----------------------------------------------------------------------------------
   #### 0.5
-  orderer:
+{% call(orderer, domain, hostname) dump_orderers(true) %}
+  {% set orderer_name = hostname ~ '_' ~ orderer.name | lower if hostname != orderer.name | lower else hostname %}
+  %{orderer_name }:
     networks:
       - external_monitor_net
+{% endcall %}
 
-  peer0_org1:
+%#-----------------------------------------------------------------------------------
+%# peer service yaml
+%#-----------------------------------------------------------------------------------
+{% call(peer, domain, hostname) dump_peers(true) %}
+  {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
+  %{peer_name }:
     networks:
       - external_monitor_net
+{% endcall %}
 
-  peer1_org1:
-    networks:
-      - external_monitor_net
-
-  peer0_org2:
-    networks:
-      - external_monitor_net
-
-  peer1_org2:
-    networks:
-      - external_monitor_net
-  
   configtxlator:
     networks:
       - external_monitor_net
