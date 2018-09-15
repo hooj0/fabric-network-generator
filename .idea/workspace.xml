@@ -3,13 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="18c4ae78-931b-4beb-9030-89fa102871ac" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/generator_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/generator/generator_tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-fabric-template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generator/networks/docker-compose-fabric-template.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-fabric.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generator/networks/docker-compose-fabric.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-zookeeper-kafka.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/generator/networks/docker-compose-zookeeper-kafka.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/commons-macro/global-macro.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/commons-macro/zk-macro.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docker-compose-fabric.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-fabric.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,7 +29,7 @@
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_generator_tools_test_TestStringMethods_test_gen_generate_shell.coverage" NAME="Unittests for generator_tools_test.TestStringMethods.test_gen_generate_shell Coverage Results" MODIFIED="1536890077553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_te_TestStringMethods_test_upper.coverage" NAME="Unittests for te.TestStringMethods.test_upper Coverage Results" MODIFIED="1536830460577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_te_TestStringMethods.coverage" NAME="Unittests for te.TestStringMethods Coverage Results" MODIFIED="1536830121264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/fabric_network_generator$generator_tools.coverage" NAME="generator_tools Coverage Results" MODIFIED="1536926879478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/generator" />
+    <SUITE FILE_PATH="coverage/fabric_network_generator$generator_tools.coverage" NAME="generator_tools Coverage Results" MODIFIED="1537016142851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/generator" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -72,29 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="docker-compose-fabric.yaml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric.yaml">
+      <file leaf-file-name="global-macro.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/commons-macro/global-macro.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="98" column="57" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="docker-compose-couch.yaml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/docker-compose-couch.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="52" column="37" lean-forward="true" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fabric-macro.yaml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="40" column="18" lean-forward="true" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
+            <state relative-caret-position="382">
+              <caret line="141" selection-start-line="141" selection-end-line="141" />
             </state>
           </provider>
         </entry>
@@ -140,12 +123,12 @@
         <option value="$PROJECT_DIR$/templates/fabric-configs/crypto-config.yaml" />
         <option value="$PROJECT_DIR$/templates/fabric-configs/configtx.yaml" />
         <option value="$PROJECT_DIR$/templates/commons-macro/zk-macro.yaml" />
-        <option value="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" />
         <option value="$PROJECT_DIR$/generator/settings.yaml" />
         <option value="$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml" />
-        <option value="$PROJECT_DIR$/templates/docker-compose-couch.yaml" />
-        <option value="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" />
         <option value="$PROJECT_DIR$/templates/docker-compose-fabric.yaml" />
+        <option value="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" />
+        <option value="$PROJECT_DIR$/templates/docker-compose-couch.yaml" />
+        <option value="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" />
         <option value="$PROJECT_DIR$/generator/generator_tools.py" />
       </list>
     </option>
@@ -204,7 +187,7 @@
               <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
               <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="commons-macro" type="462c0819:PsiDirectoryNode" />
+              <item name="network-configs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -405,7 +388,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1536738869841</updated>
-      <workItem from="1536738876598" duration="70172000" />
+      <workItem from="1536738876598" duration="71957000" />
     </task>
     <servers />
   </component>
@@ -442,7 +425,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70172000" />
+    <option name="totallyTimeSpent" value="71957000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
@@ -570,11 +553,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/network-configs/network-config-tls.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4283" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/.env">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -648,13 +626,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/commons-macro/zk-macro.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/generator/settings.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
@@ -669,13 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/fabric-configs/generate.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -683,38 +647,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml">
+    <entry file="file://$PROJECT_DIR$/templates/network-configs/network-config-tls.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-354">
-          <caret line="24" column="19" lean-forward="true" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        <state relative-caret-position="-4328" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="63" lean-forward="true" selection-start-line="63" selection-end-line="63" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml">
+    <entry file="file://$PROJECT_DIR$/templates/commons-macro/zk-macro.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="40" column="18" lean-forward="true" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="98" column="57" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="57" />
+        <state relative-caret-position="165">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="32" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="134" column="3" selection-start-line="134" selection-start-column="3" selection-end-line="134" selection-end-column="3" />
+        <state relative-caret-position="10">
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/docker-compose-couch.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="52" column="37" lean-forward="true" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="37" />
+        <state relative-caret-position="75">
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/commons-macro/global-macro.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="141" selection-start-line="141" selection-end-line="141" />
         </state>
       </provider>
     </entry>
