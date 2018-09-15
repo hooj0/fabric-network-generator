@@ -3,8 +3,8 @@
 # hoojo.me@gmail.com create by 2018-09-12
 # @changelog hyperledger fabric network generator tools zookeeper & kafka template defined
 
-{% from 'commons-macro/fabric-macro.yaml' import render_depends with context %}
-{% from 'commons-macro/zk-macro.yaml' import render_zookeeper_servers, render_kafka_zookeeper_connect with context %}
+{% from 'commons-macro/global-macro.yaml' import render_depends with context %}
+{% from 'commons-macro/global-macro.yaml' import render_zookeeper_servers, render_kafka_zookeeper_connect with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
