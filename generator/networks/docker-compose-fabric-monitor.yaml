@@ -1,0 +1,110 @@
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+# @changelog hyperledger fabric network generator tools fabric monitor network template defined
+
+version: '3.6'
+
+networks:
+  external_monitor_net:
+    external:
+      name: monitor_net
+
+services:
+#-----------------------------------------------------------------------------------
+# ca service yaml
+#-----------------------------------------------------------------------------------
+  # 0.1
+  ca0:
+    networks:
+      - external_monitor_net    
+  ca1:
+    networks:
+      - external_monitor_net    
+
+#-----------------------------------------------------------------------------------
+# zookeeper service yaml
+#-----------------------------------------------------------------------------------
+  # 0.15
+  zookeeper0:
+    networks:
+      - external_monitor_net
+  zookeeper1:
+    networks:
+      - external_monitor_net
+  zookeeper2:
+    networks:
+      - external_monitor_net
+
+#-----------------------------------------------------------------------------------
+# kafka service yaml
+#-----------------------------------------------------------------------------------
+  # 0.2
+  kafka0:
+    networks:
+      - external_monitor_net
+  kafka1:
+    networks:
+      - external_monitor_net
+  kafka2:
+    networks:
+      - external_monitor_net
+  kafka3:
+    networks:
+      - external_monitor_net
+
+#-----------------------------------------------------------------------------------
+# orderer service yaml
+#-----------------------------------------------------------------------------------
+  #### 0.5
+#-----------------------------------------------------------------------------------
+# orderer_Org1 service yaml
+#-----------------------------------------------------------------------------------
+  orderer_org1:
+    networks:
+      - external_monitor_net
+
+#-----------------------------------------------------------------------------------
+# orderer_Org2 service yaml
+#-----------------------------------------------------------------------------------
+  orderer_org2:
+    networks:
+      - external_monitor_net
+
+
+
+#-----------------------------------------------------------------------------------
+# Org1 service yaml
+#-----------------------------------------------------------------------------------
+  foo_org1:
+    networks:
+      - external_monitor_net
+
+  bar_org1:
+    networks:
+      - external_monitor_net
+
+#-----------------------------------------------------------------------------------
+# Org2 service yaml
+#-----------------------------------------------------------------------------------
+  zyz_org2:
+    networks:
+      - external_monitor_net
+
+  abc_org2:
+    networks:
+      - external_monitor_net
+
+
+  configtxlator:
+    networks:
+      - external_monitor_net
+    
+  ccenv:
+    networks:
+      - external_monitor_net
+    
+  visualizer:
+    networks:
+      - external_monitor_net    
+         
