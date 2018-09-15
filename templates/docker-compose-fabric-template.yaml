@@ -3,7 +3,7 @@
 # hoojo.me@gmail.com create by 2018-09-12
 # @changelog hyperledger fabric network generator tools fabric template defined
 
-{% from 'commons-macro/fabric-macro.yaml' import render_peer_network, render_orderer_network, dump_orderers, dump_peers with context %}
+{% from 'commons-macro/global-macro.yaml' import render_peer_network, render_orderer_network, dump_orderers, dump_peers with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -132,9 +132,24 @@ services:
 # orderer & peer service yaml
 #-----------------------------------------------------------------------------------
 {% call(orderer, domain, hostname) dump_orderers(true) %}
-%{- render_orderer_network(orderer, domain | lower, hostname | lower) -}
+  {% set orderer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set orderer_name = hostname ~ '_' ~ orderer.name | lower if hostname != orderer.name | lower else hostname %}
+  %{orderer_name }:
+    hostname: %{orderer_host }
+    networks:
+      blockchain_net:
+        aliases:
+          - %{orderer_host }
 {% endcall %}
 
+
 {% call(peer, domain, hostname) dump_peers(true) %}
-%{- render_peer_network(peer, domain | lower, hostname | lower) -}
+  {% set peer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
+  %{peer_name }:
+    hostname: %{peer_host }
+    networks:
+      blockchain_net:
+        aliases:
+          - %{peer_host }
 {% endcall %}
