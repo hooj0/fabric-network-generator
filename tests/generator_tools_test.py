@@ -25,8 +25,6 @@ from generator.generator_tools import GenFabricNetworkTools
 
 
 class TestGenFabricNetworkTools(unittest.TestCase):
-    orderers = None
-    peers = None
 
     def setUp(self):
         print('init by setUp...')
