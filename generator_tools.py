@@ -125,18 +125,18 @@ class GeneratorTools(object):
         self.__copy_network_files(settings['output'])
         tools = GenFabricNetworkTools(settings['output'])
 
-        result = tools.gen_crypto_config(orderers, peers)
-        result = tools.gen_configtx(orderers, peers)
-        result = tools.gen_generate_shell(peers)
-        result = tools.gen_fabric_compose(orderers, peers, zookeeper, kafka)
-        result = tools.gen_zookeeper_kafka(zookeeper, kafka)
-        result = tools.gen_fabric_template(orderers, peers, zookeeper, kafka)
-        result = tools.gen_couchdb(orderers, peers, zookeeper, kafka)
-        result = tools.gen_monitor(orderers, peers, zookeeper, kafka)
+        # result = tools.gen_crypto_config(orderers, peers)
+        result = tools.gen_configtx(orderers, peers, kafka, settings['orderer_type'])
+        # result = tools.gen_generate_shell(peers)
+        # result = tools.gen_fabric_compose(orderers, peers, zookeeper, kafka)
+        # result = tools.gen_zookeeper_kafka(zookeeper, kafka)
+        # result = tools.gen_fabric_template(orderers, peers, zookeeper, kafka)
+        # result = tools.gen_couchdb(orderers, peers, zookeeper, kafka)
+        # result = tools.gen_monitor(orderers, peers, zookeeper, kafka)
+        #
+        # result = tools.gen_properties(orderers, peers)
 
-        result = tools.gen_properties(orderers, peers)
-
-        # print(result)
+        print(result)
         log.done('generator networks')
 
 
