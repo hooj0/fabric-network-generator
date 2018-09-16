@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18c4ae78-931b-4beb-9030-89fa102871ac" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/generator/generator_networks.py" beforeDir="false" afterPath="$PROJECT_DIR$/generator/generator_networks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-couch.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-fabric-monitor.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-fabric-template.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-fabric.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/docker-compose-zookeeper-kafka.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generator/networks/fabric-configs/generate.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/generator_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/generator_tools.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/settings.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/generator_tools_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/generator_tools_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/networks/fabric-configs/configtx.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/networks/fabric-configs/crypto-config.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/networks/fabric-configs/generate.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/commons-macro/global-macro.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/commons-macro/global-macro.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +20,7 @@
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_generator_tools_test_TestStringMethods_test_gen_configtx.coverage" NAME="Unittests for generator_tools_test.TestStringMethods.test_gen_configtx Coverage Results" MODIFIED="1536833592677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_te_TestStringMethods_test_isupper.coverage" NAME="Unittests for te.TestStringMethods.test_isupper Coverage Results" MODIFIED="1536830433057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_generator_tools_test_TestStringMethods_test_gen_crypot_config.coverage" NAME="Unittests for generator_tools_test.TestStringMethods.test_gen_crypot_config Coverage Results" MODIFIED="1536833655328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/fabric_network_generator$generator_tools__1_.coverage" NAME="generator_tools (1) Coverage Results" MODIFIED="1537070172265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/fabric_network_generator$generator_tools__1_.coverage" NAME="generator_tools (1) Coverage Results" MODIFIED="1537095979008" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_in_te_py.coverage" NAME="Unittests in te.py Coverage Results" MODIFIED="1536830361772" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_te_TestStringMethods_test_split.coverage" NAME="Unittests for te.TestStringMethods.test_split Coverage Results" MODIFIED="1536830454803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/fabric_network_generator$Unittests_for_generator_tools_test_TestStringMethods_test_gen_generate_shell.coverage" NAME="Unittests for generator_tools_test.TestStringMethods.test_gen_generate_shell Coverage Results" MODIFIED="1536890077553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
@@ -61,44 +49,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="generator_networks.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/generator/generator_networks.py">
+      <file leaf-file-name="docker-compose-fabric-template.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
-              <folding>
-                <element signature="e#879#922#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-291">
+              <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="generator_tools.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="generator_tools.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generator_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="129" column="47" selection-start-line="129" selection-start-column="47" selection-end-line="129" selection-end-column="47" />
+            <state relative-caret-position="651">
+              <caret line="142" column="37" lean-forward="true" selection-start-line="142" selection-start-column="37" selection-end-line="142" selection-end-column="37" />
               <folding>
                 <element signature="e#859#902#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="generate.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/fabric-configs/generate.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4856">
-              <caret line="396" column="28" lean-forward="true" selection-start-line="396" selection-start-column="12" selection-end-line="396" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.yaml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/settings.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -120,6 +87,7 @@
       <find>%{hostname }.${domain }</find>
       <find>peer_domain</find>
       <find>&quot;networks&quot;</find>
+      <find>peer_host_start</find>
     </findStrings>
     <replaceStrings>
       <replace>#{</replace>
@@ -148,7 +116,6 @@
         <option value="$PROJECT_DIR$/generator/settings.yaml" />
         <option value="$PROJECT_DIR$/templates/commons-macro/fabric-macro.yaml" />
         <option value="$PROJECT_DIR$/templates/docker-compose-fabric.yaml" />
-        <option value="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" />
         <option value="$PROJECT_DIR$/generator/generator_tools.py" />
         <option value="$PROJECT_DIR$/generator/network_model.py" />
         <option value="$PROJECT_DIR$/generator/template_engine.py" />
@@ -156,9 +123,13 @@
         <option value="$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml" />
         <option value="$PROJECT_DIR$/templates/docker-compose-zookeeper-kafka.yaml" />
         <option value="$PROJECT_DIR$/tests/generator_tools_test.py" />
-        <option value="$PROJECT_DIR$/generator/generator_networks.py" />
-        <option value="$PROJECT_DIR$/generator_tools.py" />
         <option value="$PROJECT_DIR$/settings.yaml" />
+        <option value="$PROJECT_DIR$/templates/commons-macro/global-macro.yaml" />
+        <option value="$PROJECT_DIR$/templates/properties/fabric-chaincode.produce.properties" />
+        <option value="$PROJECT_DIR$/generator/generator_networks.py" />
+        <option value="$PROJECT_DIR$/templates/properties/fabric-chaincode.produce-safe.properties" />
+        <option value="$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml" />
+        <option value="$PROJECT_DIR$/generator_tools.py" />
       </list>
     </option>
   </component>
@@ -210,23 +181,7 @@
             <path>
               <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
               <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
-              <item name="generator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
-              <item name="networks" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
-              <item name="networks" type="462c0819:PsiDirectoryNode" />
-              <item name="fabric-configs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -252,6 +207,7 @@
       <recent name="D:\work_private\blockchain\fabric-network-generator\templates\macro-commons" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work_private\blockchain\fabric-network-generator\templates\properties" />
       <recent name="D:\work_private\blockchain\fabric-network-generator\templates\commons-macro" />
       <recent name="D:\work_private\blockchain\fabric-network-generator" />
       <recent name="D:\work_private\blockchain\fabric-network-generator\templates" />
@@ -433,7 +389,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1536738869841</updated>
-      <workItem from="1536738876598" duration="88514000" />
+      <workItem from="1536738876598" duration="105820000" />
     </task>
     <servers />
   </component>
@@ -470,7 +426,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88514000" />
+    <option name="totallyTimeSpent" value="105820000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
@@ -501,6 +457,32 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="1" />
+      <window_info anchor="bottom" x="0" y="125" width="1440" height="610" id="Run" order="8" weight="0.8357425" />
+      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49934298" visible="true" weight="0.24236111" />
+      <window_info id="Structure" order="3" sideWeight="0.500657" side_tool="true" weight="0.24236111" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="5" />
+      <window_info id="Designer" order="1" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
+      <window_info anchor="right" id="Database" order="1" weight="0.3295129" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.3298292" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.3298292" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="right" id="SciView" order="0" weight="0.3295129" />
+      <window_info anchor="bottom" id="Find" order="7" />
+      <window_info anchor="bottom" id="Messages" order="0" />
+      <window_info anchor="right" id="Maven Projects" order="2" weight="0.3295129" />
+      <window_info id="Favorites" order="0" sideWeight="0.501355" side_tool="true" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -618,20 +600,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/commons-macro/global-macro.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="141" selection-start-line="141" selection-end-line="141" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="124" selection-start-line="124" selection-end-line="127" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/setup-network.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -667,13 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="711">
           <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="20" column="17" lean-forward="true" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -719,41 +680,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/networks/docker-compose-couch.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1085" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/docker-compose-fabric.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-503">
-          <caret line="320" column="40" lean-forward="true" selection-start-line="320" selection-start-column="40" selection-end-line="320" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-monitor.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="47" column="10" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/docker-compose-fabric-monitor.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1119" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/docker-compose-fabric-template.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="245" column="13" lean-forward="true" selection-start-line="245" selection-start-column="13" selection-end-line="245" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/docker-compose-zookeeper-kafka.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -774,26 +704,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generator/generator_networks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
-          <folding>
-            <element signature="e#879#922#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generator_tools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="129" column="47" selection-start-line="129" selection-start-column="47" selection-end-line="129" selection-end-column="47" />
-          <folding>
-            <element signature="e#859#902#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/networks/fabric-configs/generate.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4856">
@@ -803,8 +713,104 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+        <state relative-caret-position="135">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/commons-macro/global-macro.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="173" column="33" selection-start-line="173" selection-start-column="33" selection-end-line="173" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generator/generator_networks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="165" column="8" selection-start-line="165" selection-start-column="8" selection-end-line="165" selection-end-column="8" />
+          <folding>
+            <element signature="e#879#922#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/properties/fabric-chaincode.produce.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="116" selection-start-line="35" selection-start-column="116" selection-end-line="35" selection-end-column="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/properties/fabric-chaincode.produce-safe.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/docker-compose-fabric.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3717">
+          <caret line="320" column="20" lean-forward="true" selection-start-line="320" selection-start-column="20" selection-end-line="320" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/docker-compose-couch.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1119" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/docker-compose-fabric-monitor.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-996" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/docker-compose-fabric-template.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3016" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="161" column="4" selection-start-line="161" selection-start-column="4" selection-end-line="161" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/docker-compose-zookeeper-kafka.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-264">
+          <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/properties/fabric-chaincode.produce-safe.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-254" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/networks/properties/fabric-chaincode.produce.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/docker-compose-fabric-template.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-291">
+          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generator_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="142" column="37" lean-forward="true" selection-start-line="142" selection-start-column="37" selection-end-line="142" selection-end-column="37" />
+          <folding>
+            <element signature="e#859#902#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
