@@ -19,9 +19,9 @@
 # 构建 fabric 网络配置生成工具 TestCase
 # -------------------------------------------------------------------------------
 import unittest
-from generator.generator_tools import OrdererOrg
-from generator.generator_tools import PeerOrg
-from generator.generator_tools import GenFabricNetworkTools
+from generator.network_model import OrdererOrg
+from generator.network_model import PeerOrg
+from generator.generator_networks import GenFabricNetworkTools
 
 
 class TestGenFabricNetworkTools(unittest.TestCase):
