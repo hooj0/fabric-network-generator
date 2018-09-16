@@ -3,7 +3,7 @@
 # hoojo.me@gmail.com create by 2018-09-12
 # @changelog hyperledger fabric network generator tools fabric template defined
 
-{% from 'commons-macro/global-macro.yaml' import render_peer_network, render_orderer_network, dump_orderers, dump_peers with context %}
+{% from 'commons-macro/global-macro.yaml' import render_peer_network, render_orderer_network, dump_orderers, dump_peers, fabric with context %}
 version: '3.6'
 
 #-----------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ services:
   {% set peer_domain = peer.name | lower ~ '.' ~ peer.domain | lower %}
   ca%{loop.index0 }:
     container_name: ca.%{peer_domain }
-    hostname: ca.foo.com
+    hostname: ca.%{peer_domain }
     <<: *ca-base
     environment:
       <<: *ca-env-common
@@ -54,7 +54,8 @@ services:
     command: sh -c "fabric-ca-server start ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.%{peer_domain }-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA%{loop.index }_PRIVATE_KEY -b admin:adminpw -d"
     #command: sh -c "fabric-ca-server start -n ca-%{peer.name | lower } ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.%{peer_domain }-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA%{loop.index }_PRIVATE_KEY -b admin:adminpw ${HYPERLEDGER_FABRIC_ENABLE_CA_TLS} --tls.certfile /etc/hyperledger/fabric-ca-server-config/ca.%{peer_domain }-cert.pem --tls.keyfile /etc/hyperledger/fabric-ca-server-config/CA%{loop.index }_PRIVATE_KEY -d"
     ports:
-      - "7054:7054"
+      - %{fabric.ca_count + 7}054:7054
+      {% set fabric.ca_count = fabric.ca_count + 1 %}
     volumes:
       - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/%{peer_domain }/ca/:/etc/hyperledger/fabric-ca-server-config:ro
     networks:
