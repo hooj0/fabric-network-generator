@@ -134,6 +134,8 @@ class GeneratorTools(object):
         result = tools.gen_couchdb(orderers, peers, zookeeper, kafka)
         result = tools.gen_monitor(orderers, peers, zookeeper, kafka)
 
+        result = tools.gen_properties(orderers, peers)
+
         # print(result)
         log.done('generator networks')
 
