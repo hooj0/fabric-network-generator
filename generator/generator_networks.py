@@ -46,26 +46,29 @@ class GenFabricNetworkTools(object):
 
         return orderers, peers, kafka, zookeeper
 
-    def gen_crypto_config(self, orderers, peers):
+    def gen_crypto_config(self, orderers, peers, orderer_type='kafka'):
         log.line('start generator crypto config')
 
         orderers, peers, *_ = self.__default_args(orderers, peers)
         log.debug('default orderers: %s' % orderers)
         log.debug('default peers: %s' % peers)
 
-        result = TemplateEngine.generator(self.output_directory, "fabric-configs/crypto-config.yaml", dict(orderers=orderers, peers=peers))
+        args = dict(orderers=orderers, peers=peers, orderer_type=orderer_type)
+        result = TemplateEngine.generator(self.output_directory, "fabric-configs/crypto-config.yaml", args)
 
         log.done('generator crypto config')
         return result
 
-    def gen_configtx(self, orderers, peers):
+    def gen_configtx(self, orderers, peers, kafka, orderer_type):
         log.line('start generator configtx config')
 
-        orderers, peers, *_ = self.__default_args(orderers, peers)
+        orderers, peers, kafka, _ = self.__default_args(orderers, peers, kafka)
         log.debug('default orderers: %s' % orderers)
         log.debug('default peers: %s' % peers)
+        log.debug('default kafka: %s' % kafka)
 
-        result = TemplateEngine.generator(self.output_directory, "fabric-configs/configtx.yaml", dict(orderers=orderers, peers=peers))
+        args = dict(orderers=orderers, peers=peers, orderer_type=orderer_type, kafka_count=kafka['count'])
+        result = TemplateEngine.generator(self.output_directory, "fabric-configs/configtx.yaml", args)
 
         log.done('generator configtx config')
         return result
