@@ -7,7 +7,7 @@
 %# ==============================================================================================
 %# global variables
 %# ==============================================================================================
-{% set fabric = namespace(orderer_count=0, peer_count=0) %}
+{% set fabric = namespace(orderer_count=0, peer_count=0, ca_count=0, peer_host_start=0, peer_event_host_start=0) %}
 
 
 %# ==============================================================================================
@@ -85,6 +85,45 @@
 {% endmacro %}
 
 
+%# ----------------------------------------------------------------------------------------------
+%# Orderer Organization render hosts
+%# ----------------------------------------------------------------------------------------------
+{% macro render_orderer_properties(host, unsafe_mode) %}
+  {% set orderer_hosts = [] %}
+  {% set ns = namespace(host_start=0) %}
+  {% for orderer in orderers %}
+    {% if orderer.hostnames is sequence %}
+      {% for hostname in orderer.hostnames %}
+          {% set orderer_host = hostname | lower ~ '.' ~ orderer.domain | lower %}
+          {%- set prop_host -%}
+            %{ orderer_host }@grpc\://%{ host | d(orderer_host) }\:%{ ns.host_start + 7}050
+          {%- endset -%}
+          {% set tmp = orderer_hosts.append(prop_host) %}
+          {% if unsafe_mode %}
+            {% set ns.host_start = ns.host_start + 1 %}
+          {% endif %}
+      {% endfor %}
+    {% elif orderer.count > 0 %}
+      {% for index in range(orderer.count) %}
+          {% set hostname = orderer.name | lower ~ index %}
+          {% set orderer_host = hostname | lower ~ '.' ~ orderer.domain | lower %}
+          {% set tmp = orderer_hosts.append(orderer_host ~ '@grpc\://' ~ host | d(orderer_host) ~ '\:' ~ (ns.host_start + 7) ~ '050') %}
+          {% if unsafe_mode %}
+            {% set ns.host_start = ns.host_start + 1 %}
+          {% endif %}
+      {% endfor %}
+    {% else %}
+          {% set orderer_host = orderer.name | lower ~ '.' ~ orderer.domain | lower %}
+          {% set tmp = orderer_hosts.append(orderer_host ~ '@grpc\://' ~ host | d(orderer_host) ~ '\:' ~ (ns.host_start + 7) ~ '050') %}
+          {% if unsafe_mode %}
+            {% set ns.host_start = ns.host_start + 1 %}
+          {% endif %}
+    {% endif %}
+  {% endfor %}
+%{- orderer_hosts | join(',') -}
+{% endmacro %}
+
+
 %# ==============================================================================================
 %# Peer Organization template
 %# ==============================================================================================
@@ -121,6 +160,36 @@
   {% endif %}
 {% endmacro %}
 
+
+%# ----------------------------------------------------------------------------------------------
+%# Orderer Organization render hosts
+%# ----------------------------------------------------------------------------------------------
+{%- macro increment_host(is_event) -%}
+  {% if is_event is none or is_event is not defined %}
+%{- 7 -}
+  {% elif is_event %}
+%{- fabric.peer_event_host_start + 7 -}
+    {% set fabric.peer_event_host_start = fabric.peer_event_host_start + 1 %}
+  {% else %}
+%{- fabric.peer_host_start + 7 -}
+    {% set fabric.peer_host_start = fabric.peer_host_start + 1 %}
+  {% endif %}
+{%- endmacro -%}
+
+{% macro render_peer_properties(is_event, peer, host, port) %}
+    {% set peer_domain = peer.name | lower ~ '.' ~ peer.domain | lower %}
+    {% if peer.hostnames is iterable %}
+      {% for hostname in peer.hostnames %}
+        {% set peer_host = hostname | lower ~ '.' ~ peer_domain | lower %}
+%{peer_host }@grpc\://%{host | d(peer_host)}\:%{increment_host(is_event)}05%{port | d(1)}{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    {% else %}
+      {% for index in range(peer.template_count) %}
+        {% set peer_host = 'peer' ~ index | lower ~ '.' ~ peer_domain | lower %}
+%{peer_host }@grpc\://%{host | d(peer_host)}\:%{increment_host(is_event)}05%{port | d(1)}{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    {% endif %}
+{% endmacro %}
 
 
 %# ==============================================================================================
