@@ -20,181 +20,137 @@
 # -------------------------------------------------------------------------------
 # 构建 fabric 网络配置生成工具Class
 # -------------------------------------------------------------------------------
-from jinja2 import Environment
-from jinja2 import FileSystemLoader
-from jinja2 import select_autoescape
 from generator.app_log import AppLog as log
-import os
-
-
-class OrdererOrg(object):
-    """
-    Orerer org configuration class
-    """
-
-    __default_name = "Orderer"
-    __default_domain = "hoojo.me"
-    __default_hostnames = [__default_name]
-
-    def __init__(self, name=__default_name, domain=__default_domain, hostnames=None, count=0):
-
-        self.name = name
-        self.domain = domain
-        self.hostnames = hostnames
-        self.count = count
-
-        if hostnames is None:
-            self.hostnames = set(self.__default_hostnames)
-
-        if self.count < 0:
-            self.count = 0
-
-
-class PeerOrg(object):
-    """
-    Peer org configuration class
-    """
-
-    __default_name = "Org"
-    __default_domain = "hoojo.cn"
-    __default_hostnames = None
-
-    __template_count = 2
-    __user_count = 1
-
-    def __init__(self, name=__default_name, domain=__default_domain, hostnames=None, template_count=__template_count, user_count=__user_count):
-
-        self.name = name
-        self.domain = domain
-        self.hostnames = hostnames
-
-        self.template_count = template_count
-        self.user_count = user_count
-
-        if self.template_count < self.__template_count:
-            self.template_count = self.__template_count
-
-        if self.user_count < self.__user_count:
-            self.user_count = self.__user_count
-
-
-class TemplateEngine(object):
-
-    # 从指定位置加载模板的环境
-    __loader = FileSystemLoader('../templates')
-
-    # 更多配置参考：http://jinja.pocoo.org/docs/2.10/api/#high-level-api
-    __env = Environment(loader=__loader,
-                        autoescape=select_autoescape(['yml', 'yaml', 'js', 'sh']),
-                        block_start_string='{%', block_end_string='%}',
-                        variable_start_string='%{', variable_end_string='}',
-
-                        line_statement_prefix="%%",
-                        line_comment_prefix="%#",
-                        trim_blocks=True, keep_trailing_newline=True, lstrip_blocks=True)
-
-    @staticmethod
-    def render(template_file, args):
-        # 获取模板
-        template = TemplateEngine.__env.get_template(template_file)
-
-        # 渲染模板
-        result = template.render(args)
-
-        return result
-
-    @staticmethod
-    def writer(output, template_file, data):
-        file_path = output + "/" + template_file
-
-        realpath = os.path.realpath(file_path)
-        dirname = os.path.dirname(realpath)
-        log.info('generator file to realpath: %s' % realpath)
-
-        if not os.path.exists(dirname):
-            os.makedirs(dirname)
-
-        with open(file_path, 'w', encoding=u'utf-8') as file:
-            file.seek(0)
-            file.truncate()   #清空文件
-
-            file.write(data)
-
-            file.flush()
-            file.close()
-
-    @staticmethod
-    def generator(output, template_file, args):
-        log.info("start generator config: %s" % template_file)
-        log.debug("generator config to: %s" % output)
-        log.debug("generator args: %s" % args)
-
-        result = TemplateEngine.render(template_file, args)
-        print(result)
-
-        TemplateEngine.writer(output, template_file, result)
-
-        log.done("generator config [%s]" % template_file)
+from generator.network_model import OrdererOrg
+from generator.network_model import PeerOrg
+from generator.template_engine import TemplateEngine
 
 
 class GenFabricNetworkTools(object):
 
-    def gen_crypot_config(self, orderers, peers):
+    def __init__(self, output=None):
+        if output is None:
+            output = 'networks'
+
+        self.output_directory = output
+
+    def __default_args(self, orderers, peers, kafka=None, zookeeper=None):
         if orderers is None:
             orderers = [OrdererOrg()]
-
         if peers is None:
             peers = [PeerOrg('Org1'), PeerOrg('Org2')]
+        if kafka is None:
+            kafka = {'domain': 'example.com', 'count': 4}
+        if zookeeper is None:
+            zookeeper = {'domain': 'example.com', 'count': 3}
 
-        TemplateEngine.generator("networks", "fabric-configs/crypto-config.yaml", dict(orderers=orderers, peers=peers))
+        return orderers, peers, kafka, zookeeper
+
+    def gen_crypto_config(self, orderers, peers):
+        log.line('start generator crypto config')
+
+        orderers, peers, *_ = self.__default_args(orderers, peers)
+        log.debug('default orderers: %s' % orderers)
+        log.debug('default peers: %s' % peers)
+
+        result = TemplateEngine.generator(self.output_directory, "fabric-configs/crypto-config.yaml", dict(orderers=orderers, peers=peers))
+
+        log.done('generator crypto config')
+        return result
 
     def gen_configtx(self, orderers, peers):
-        if orderers is None:
-            orderers = [OrdererOrg()]
+        log.line('start generator configtx config')
 
-        if peers is None:
-            peers = [PeerOrg('Org1'), PeerOrg('Org2')]
+        orderers, peers, *_ = self.__default_args(orderers, peers)
+        log.debug('default orderers: %s' % orderers)
+        log.debug('default peers: %s' % peers)
 
-        TemplateEngine.generator("networks", "fabric-configs/configtx.yaml", dict(orderers=orderers, peers=peers))
+        result = TemplateEngine.generator(self.output_directory, "fabric-configs/configtx.yaml", dict(orderers=orderers, peers=peers))
+
+        log.done('generator configtx config')
+        return result
 
     def gen_generate_shell(self, peers):
-        if peers is None:
-            peers = [PeerOrg('Org1'), PeerOrg('Org2')]
+        log.line('start generator shell script')
 
-        TemplateEngine.generator("networks", "fabric-configs/generate.sh", dict(peers=peers))
+        _, peers, *_ = self.__default_args(None, peers)
+        log.debug('default peers: %s' % peers)
 
-    def gen_fabric_compose(self, orderers, peers):
-        if orderers is None:
-            orderers = [OrdererOrg('orderer_Org1'), OrdererOrg('orderer_Org2', domain='hoojo.xyz')]
+        result = TemplateEngine.generator(self.output_directory, "fabric-configs/generate.sh", dict(peers=peers))
 
-        if peers is None:
-            peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
+        log.done('generator shell script')
+        return result
 
-        TemplateEngine.generator("networks", "docker-compose-fabric.yaml", dict(orderers=orderers, peers=peers, zookeeper_count=2, kafka_count=5))
+    def gen_fabric_compose(self, orderers, peers, zookeeper, kafka):
+        log.line('start generator fabric compose file')
 
-    def gen_zookeeper_kafka(self, zookeeper_count=3, kafka_count=4):
-        TemplateEngine.generator("networks", "docker-compose-zookeeper-kafka.yaml", dict(zookeeper_count=zookeeper_count, kafka_count=kafka_count))
+        orderers, peers, kafka, zookeeper = self.__default_args(orderers, peers, kafka, zookeeper)
+        log.debug('default orderers: %s' % orderers)
+        log.debug('default peers: %s' % peers)
+        log.debug('default kafka: %s' % kafka)
+        log.debug('default zookeeper: %s' % zookeeper)
 
-    def gen_fabric_template(self, orderers, peers, zookeeper={'domain': 'simple.top', 'count': 3}, kafka={'domain': 'simple.xyz', 'count': 4}):
-        if orderers is None:
-            orderers = [OrdererOrg('orderer_Org1'), OrdererOrg('orderer_Org2', domain='hoojo.xyz')]
+        args = dict(orderers=orderers, peers=peers, zookeeper_count=zookeeper['count'], kafka_count=kafka['count'])
+        result = TemplateEngine.generator(self.output_directory, "docker-compose-fabric.yaml", args)
 
-        if peers is None:
-            peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
-        TemplateEngine.generator("networks", "docker-compose-fabric-template.yaml", dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers))
+        log.done('generator fabric compose file')
+        return result
 
-    def gen_couchdb(self, orderers, peers, zookeeper={'domain': 'simple.top', 'count': 3}, kafka={'domain': 'simple.xyz', 'count': 4}):
-        if orderers is None:
-            orderers = [OrdererOrg('orderer_Org1'), OrdererOrg('orderer_Org2', domain='hoojo.xyz')]
+    def gen_zookeeper_kafka(self, zookeeper, kafka):
+        log.line('start generator fabric zookeeper-kafka file')
 
-        if peers is None:
-            peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
-        TemplateEngine.generator("networks", "docker-compose-couch.yaml", dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers))
+        _, _, kafka, zookeeper = self.__default_args(None, None, kafka, zookeeper)
+        log.debug('default kafka: %s' % kafka)
+        log.debug('default zookeeper: %s' % zookeeper)
 
-    def gen_monitor(self, orderers, peers, zookeeper={'domain': 'simple.top', 'count': 3}, kafka={'domain': 'simple.xyz', 'count': 4}):
-        if orderers is None:
-            orderers = [OrdererOrg('orderer_Org1'), OrdererOrg('orderer_Org2', domain='hoojo.xyz')]
+        args = dict(zookeeper_count=zookeeper['count'], kafka_count=kafka['count'])
+        result = TemplateEngine.generator(self.output_directory, "docker-compose-zookeeper-kafka.yaml", args)
 
-        if peers is None:
-            peers = [PeerOrg('Org1', domain='simple.top', hostnames=['foo', 'bar']), PeerOrg('Org2', domain='example.cn', hostnames=['zyz', 'abc'])]
-        TemplateEngine.generator("networks", "docker-compose-fabric-monitor.yaml", dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers))
+        log.done('generator fabric zookeeper-kafka file')
+        return result
+
+    def gen_fabric_template(self, orderers, peers, zookeeper, kafka):
+        log.line('start generator fabric template file')
+
+        orderers, peers, kafka, zookeeper = self.__default_args(orderers, peers, kafka, zookeeper)
+        log.debug('default orderers: %s' % orderers)
+        log.debug('default peers: %s' % peers)
+        log.debug('default kafka: %s' % kafka)
+        log.debug('default zookeeper: %s' % zookeeper)
+
+        args = dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers)
+        result = TemplateEngine.generator(self.output_directory, "docker-compose-fabric-template.yaml", args)
+
+        log.done('generator fabric template file')
+        return result
+
+    def gen_couchdb(self, orderers, peers, zookeeper, kafka):
+        log.line('start generator couch db file')
+
+        orderers, peers, kafka, zookeeper = self.__default_args(orderers, peers, kafka, zookeeper)
+        log.debug('default orderers: %s' % orderers)
+        log.debug('default peers: %s' % peers)
+        log.debug('default kafka: %s' % kafka)
+        log.debug('default zookeeper: %s' % zookeeper)
+
+        args = dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers)
+        result = TemplateEngine.generator(self.output_directory, "docker-compose-couch.yaml", args)
+
+        log.done('generator couch db file')
+        return result
+
+    def gen_monitor(self, orderers, peers, zookeeper, kafka):
+        log.line('start generator monitor file')
+
+        orderers, peers, kafka, zookeeper = self.__default_args(orderers, peers, kafka, zookeeper)
+        log.debug('default orderers: %s' % orderers)
+        log.debug('default peers: %s' % peers)
+        log.debug('default kafka: %s' % kafka)
+        log.debug('default zookeeper: %s' % zookeeper)
+
+        args = dict(zookeeper=zookeeper, kafka=kafka, orderers=orderers, peers=peers)
+        result = TemplateEngine.generator(self.output_directory, "docker-compose-fabric-monitor.yaml", args)
+
+        log.done('generator monitor file')
+        return result
+
