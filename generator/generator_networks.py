@@ -154,3 +154,17 @@ class GenFabricNetworkTools(object):
         log.done('generator monitor file')
         return result
 
+    def gen_properties(self, orderers, peers):
+        log.line('start generator properties file')
+
+        orderers, peers, *_ = self.__default_args(orderers, peers)
+        log.debug('default orderers: %s' % orderers)
+        log.debug('default peers: %s' % peers)
+
+        args = dict(orderers=orderers, peers=peers)
+        result = TemplateEngine.generator(self.output_directory, "properties/fabric-chaincode.produce.properties", args)
+        result = TemplateEngine.generator(self.output_directory, "properties/fabric-chaincode.produce-safe.properties", args)
+
+        log.done('generator properties file')
+        return result
+
