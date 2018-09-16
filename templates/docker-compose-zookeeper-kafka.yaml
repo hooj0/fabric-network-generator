@@ -63,7 +63,7 @@ x-base-services:
       #placement:
       #  constraints: [node.role == manager]
     depends_on:
-%{ render_depends('zookeeper', zookeeper_count) -}
+%{ render_depends('zookeeper', zookeeper_count) }
 
 #-----------------------------------------------------------------------------------
 # kafka & zookeeper service yaml
