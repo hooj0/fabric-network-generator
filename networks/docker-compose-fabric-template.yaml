@@ -1,0 +1,156 @@
+# hyperledger fabric network generator tools
+# Copyright by @hoojo
+# hoojo.me@gmail.com create by 2018-09-12
+# @changelog hyperledger fabric network generator tools fabric template defined
+
+{% from 'commons-macro/global-macro.yaml' import render_peer_network, render_orderer_network, dump_orderers, dump_peers, fabric with context %}
+version: '3.6'
+
+#-----------------------------------------------------------------------------------
+# base service yaml
+#-----------------------------------------------------------------------------------
+x-base-services:
+  ca: &ca-base
+    image: hyperledger/fabric-ca${IMAGE_TAG_FABRIC_CA}
+    environment: &ca-env-common
+      FABRIC_CA_HOME: /etc/hyperledger/fabric-ca-server
+      FABRIC_CA_SERVER_TLS_ENABLED: ${HYPERLEDGER_FABRIC_ENABLE_TLS}
+    deploy: &ca-deploy-common
+      #mode: global
+      mode: replicated
+      replicas: 4
+      #resources:
+        #limits:
+          #cpus: "0.2"
+          #memory: 2000M
+      restart_policy:
+        condition: on-failure   
+
+
+#-----------------------------------------------------------------------------------
+# networks yaml
+#-----------------------------------------------------------------------------------
+networks:
+  blockchain_net:
+    driver: overlay
+    attachable: true
+
+
+#-----------------------------------------------------------------------------------
+# core service yaml
+#-----------------------------------------------------------------------------------
+services:
+{% for peer in peers %}
+  {% set peer_domain = peer.name | lower ~ '.' ~ peer.domain | lower %}
+  ca%{loop.index0 }:
+    container_name: ca.%{peer_domain }
+    hostname: ca.%{peer_domain }
+    <<: *ca-base
+    environment:
+      <<: *ca-env-common
+      FABRIC_CA_SERVER_CA_NAME: ca-%{peer.name | lower }
+      FABRIC_CA_SERVER_TLS_KEYFILE: /etc/hyperledger/fabric-ca-server-config/CA%{loop.index }_PRIVATE_KEY
+      FABRIC_CA_SERVER_TLS_CERTFILE: /etc/hyperledger/fabric-ca-server-config/ca.%{peer_domain }-cert.pem
+    command: sh -c "fabric-ca-server start ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.%{peer_domain }-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA%{loop.index }_PRIVATE_KEY -b admin:adminpw -d"
+    #command: sh -c "fabric-ca-server start -n ca-%{peer.name | lower } ${V11_IDENTITIES_ALLOWREMOVE} ${V11_AFFILIATIONS_ALLOWREMOVE} --registry.maxenrollments -1 --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.%{peer_domain }-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA%{loop.index }_PRIVATE_KEY -b admin:adminpw ${HYPERLEDGER_FABRIC_ENABLE_CA_TLS} --tls.certfile /etc/hyperledger/fabric-ca-server-config/ca.%{peer_domain }-cert.pem --tls.keyfile /etc/hyperledger/fabric-ca-server-config/CA%{loop.index }_PRIVATE_KEY -d"
+    ports:
+      - %{fabric.ca_count + 7}054:7054
+      {% set fabric.ca_count = fabric.ca_count + 1 %}
+    volumes:
+      - ./fabric-configs/${FABRIC_NETWORK_CONFIGTX_VERSION}/crypto-config/peerOrganizations/%{peer_domain }/ca/:/etc/hyperledger/fabric-ca-server-config:ro
+    networks:
+      blockchain_net:
+        aliases:
+          - ca.%{peer_domain }
+
+{% endfor %}
+
+#-----------------------------------------------------------------------------------
+# tools service yaml
+#-----------------------------------------------------------------------------------  
+  configtxlator:
+    container_name: configtxlator.com
+    hostname: configtxlator.com
+    image: hyperledger/fabric-tools${IMAGE_TAG_FABRIC}    
+    command: /usr/local/bin/configtxlator start
+    ports:
+      - "7059:7059"
+    networks:
+      blockchain_net:
+        aliases:
+          - configtxlator.com
+    deploy:
+      replicas: 2
+      #resources:
+        #limits:
+          #cpus: "0.1"
+          #memory: 500M
+      restart_policy:
+        condition: on-failure  
+
+  ccenv:
+    container_name: ccenv
+    image: hyperledger/fabric-ccenv${IMAGE_TAG_FABRIC}
+    networks:
+      - blockchain_net
+    deploy:
+      replicas: 2
+      #resources:
+        #limits:
+          #cpus: "0.1"
+          #memory: 2000M
+      restart_policy:
+        condition: on-failure
+
+
+#-----------------------------------------------------------------------------------
+# zookeeper service yaml
+#-----------------------------------------------------------------------------------
+{% for index in range(zookeeper.count) %}
+  zookeeper%{ index }:
+    hostname: zookeeper%{ index }.%{zookeeper.domain}
+    networks:
+      blockchain_net:
+        aliases:
+          - zookeeper%{ index }.%{zookeeper.domain}
+
+{% endfor %}
+
+#-----------------------------------------------------------------------------------
+# kafka service yaml
+#-----------------------------------------------------------------------------------
+{% for index in range(kafka.count) %}
+  kafka%{ index }:
+    hostname: kafka%{ index }.%{kafka.domain}
+    networks:
+      blockchain_net:
+        aliases:
+          - kafka%{ index }.%{kafka.domain}
+
+{% endfor %}
+
+#-----------------------------------------------------------------------------------
+# orderer & peer service yaml
+#-----------------------------------------------------------------------------------
+{% call(orderer, domain, hostname) dump_orderers(true) %}
+  {% set orderer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set orderer_name = hostname ~ '_' ~ orderer.name | lower if hostname != orderer.name | lower else hostname %}
+  %{orderer_name }:
+    hostname: %{orderer_host }
+    networks:
+      blockchain_net:
+        aliases:
+          - %{orderer_host }
+{% endcall %}
+
+
+{% call(peer, domain, hostname) dump_peers(true) %}
+  {% set peer_host = hostname | lower ~ '.' ~ domain | lower %}
+  {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
+  %{peer_name }:
+    hostname: %{peer_host }
+    networks:
+      blockchain_net:
+        aliases:
+          - %{peer_host }
+{% endcall %}
