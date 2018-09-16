@@ -20,7 +20,7 @@ settings:
 
     - name: Orderer2
       domain: simple.com
-      count: 3
+      count: 2
 
   # Peer Organization Generator Settings
   peers:
