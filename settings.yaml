@@ -12,6 +12,9 @@ settings:
   # Output fabric network config directory Generator Settings
   output: networks/
 
+  # OrdererType: kafka | solo
+  orderer_type: solo
+
   # Orderer Organization Generator Settings
   orderers:
     - name: Orderer1
