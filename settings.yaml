@@ -10,7 +10,7 @@
 settings:
 
   # Output fabric network config directory Generator Settings
-  output: ../networks/
+  output: networks/
 
   # Orderer Organization Generator Settings
   orderers:
@@ -19,24 +19,21 @@ settings:
       hostnames: [foo, bar]
 
     - name: Orderer2
-      domain: simple.cn
+      domain: simple.com
       count: 3
 
   # Peer Organization Generator Settings
   peers:
     - name: Org1
-      domain: hoojo.com
+      domain: hoojo.top
       hostnames: [foo, bar]
       user_count: 2
       template_count: 3
 
     - name: Org2
-      domain: hoojo.com
+      domain: hoojo.me
       user_count: 2
       template_count: 2
-
-  ca:
-    domain: hoojo.me
 
   zookeeper:
     domain: simple.xyz
