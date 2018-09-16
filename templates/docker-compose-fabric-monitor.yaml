@@ -45,7 +45,6 @@ services:
 %#-----------------------------------------------------------------------------------
 %# orderer service yaml
 %#-----------------------------------------------------------------------------------
-  #### 0.5
 {% call(orderer, domain, hostname) dump_orderers(true) %}
   {% set orderer_name = hostname ~ '_' ~ orderer.name | lower if hostname != orderer.name | lower else hostname %}
   %{orderer_name }:
