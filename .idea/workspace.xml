@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18c4ae78-931b-4beb-9030-89fa102871ac" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/generator_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/generator_tools.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -46,11 +45,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="generator_tools.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="generator_tools.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generator_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="182" column="73" lean-forward="true" selection-start-line="182" selection-start-column="24" selection-end-line="182" selection-end-column="73" />
+            <state relative-caret-position="150">
+              <caret line="175" column="71" selection-start-line="175" selection-start-column="71" selection-end-line="175" selection-end-column="71" />
               <folding>
                 <element signature="e#859#902#0" expanded="true" />
               </folding>
@@ -58,7 +57,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -141,8 +140,8 @@
         <option value="$PROJECT_DIR$/generator/app_log.py" />
         <option value="$PROJECT_DIR$/settings.yaml" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/generator_tools.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/generator_tools.py" />
       </list>
     </option>
   </component>
@@ -413,7 +412,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1536738869841</updated>
-      <workItem from="1536738876598" duration="121369000" />
+      <workItem from="1536738876598" duration="121445000" />
     </task>
     <servers />
   </component>
@@ -450,7 +449,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="121369000" />
+    <option name="totallyTimeSpent" value="121445000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
@@ -806,16 +805,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generator_tools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="182" column="73" lean-forward="true" selection-start-line="182" selection-start-column="24" selection-end-line="182" selection-end-column="73" />
-          <folding>
-            <element signature="e#859#902#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -823,6 +812,16 @@
             <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generator_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="175" column="71" selection-start-line="175" selection-start-column="71" selection-end-line="175" selection-end-column="71" />
+          <folding>
+            <element signature="e#859#902#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
