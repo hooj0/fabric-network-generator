@@ -18,27 +18,27 @@ settings:
   # Orderer Organization Generator Settings
   orderers:
     - name: Orderer
-      domain: orderer.com
+      domain: orderer.masget.com
       hostnames: [first, last]
 
   # Peer Organization Generator Settings
   peers:
     - name: Org1
-      domain: hoojo.top
-      hostnames: [foo, bar]
+      domain: masget.com
+      hostnames: [master, worker]
       user_count: 2
       template_count: 2
 
     - name: Org2
-      domain: hoojo.me
-      hostnames: [xyz, abc]
+      domain: masget.com
+      hostnames: [master, worker]
       user_count: 2
       template_count: 2
 
   zookeeper:
-    domain: simple.xyz
+    domain: masget.com
     count: 4
 
   kafka:
-    domain: simple.top
+    domain: masget.com
     count: 4
