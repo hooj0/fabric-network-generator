@@ -44,15 +44,15 @@ class AppLog(object):
             print(line)
 
         if level == 'DEBUG':
-            print("\033[1;36;42m %s \033[0m ===> \033[0;36m%s\033[0m" % (level.rjust(8), message))
+            print("\033[1;33;42m %s \033[0m ===> \033[0;36m%s\033[0m" % (level.rjust(8), message))
         elif level == 'INFO':
-            print("\033[1;36;42m %s \033[0m ===> \033[0;35m%s\033[0m" % (level.rjust(8), message))
+            print("\033[1;33;42m %s \033[0m ===> \033[0;35m%s\033[0m" % (level.rjust(8), message))
         elif level == 'WARN':
-            print("\033[1;36;42m %s \033[0m ===> \033[0;33m%s\033[0m" % (level.rjust(8), message))
+            print("\033[1;33;42m %s \033[0m ===> \033[0;33m%s\033[0m" % (level.rjust(8), message))
         elif level == 'ERROR':
-            print("\033[1;36;42m %s \033[0m ===> \033[0;31m%s\033[0m" % (level.rjust(8), message))
+            print("\033[1;33;42m %s \033[0m ===> \033[0;31m%s\033[0m" % (level.rjust(8), message))
         else:
-            print("\033[1;36;42m %s \033[0m ===> \033[1;37m%s\033[0m" % (level.rjust(8), message))
+            print("\033[1;33;42m %s \033[0m ===> \033[1;37m%s\033[0m" % (level.rjust(8), message))
 
         if line_after:
             print(line)
