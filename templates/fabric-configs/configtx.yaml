@@ -215,6 +215,16 @@ Orderer: &OrdererDefaults
         {% for index in range(kafka_count) %}
           - "kafka%{ index }:9092"
         {% endfor %}
+{% else %}
+#    Kafka:
+#        # Brokers: A list of Kafka brokers to which the orderer connects. Edit
+#        # this list to identify the brokers of the ordering service.
+#        # NOTE: Use IP:port notation.
+#
+#        Brokers:
+        {% for index in range(kafka_count) %}
+#          - "kafka%{ index }:9092"
+        {% endfor %}
 {% endif %}
 
     # Organizations lists the orgs participating on the orderer side of the
