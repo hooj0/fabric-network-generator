@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18c4ae78-931b-4beb-9030-89fa102871ac" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generator_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/generator_tools.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,40 +49,10 @@
       <file leaf-file-name="generator_tools.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generator_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="179" column="6" lean-forward="true" selection-start-line="179" selection-start-column="6" selection-end-line="186" selection-end-column="101" />
+            <state relative-caret-position="120">
+              <caret line="182" column="73" lean-forward="true" selection-start-line="182" selection-start-column="24" selection-end-line="182" selection-end-column="73" />
               <folding>
                 <element signature="e#859#902#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="configtx.yaml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/fabric-configs/configtx.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="64" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="105" column="10" selection-start-line="105" selection-start-column="10" selection-end-line="105" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="generator_networks.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/generator/generator_networks.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="975">
-              <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
-              <folding>
-                <element signature="e#879#922#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -92,8 +62,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="192">
-                <caret line="93" column="9" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
+              <first_editor relative-caret-position="282">
+                <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
               </first_editor>
               <second_editor />
             </state>
@@ -225,6 +195,17 @@
               <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
               <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
               <item name="generator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="fabric-network-generator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fabric-network-generator" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="fabric-configs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -432,7 +413,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1536738869841</updated>
-      <workItem from="1536738876598" duration="120987000" />
+      <workItem from="1536738876598" duration="121369000" />
     </task>
     <servers />
   </component>
@@ -469,7 +450,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120987000" />
+    <option name="totallyTimeSpent" value="121369000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
@@ -485,7 +466,7 @@
       <window_info anchor="bottom" id="Version Control" order="5" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.3292683" />
       <window_info id="Designer" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49934298" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49934298" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="1" />
       <window_info anchor="right" id="Database" order="1" weight="0.3295129" />
       <window_info anchor="right" id="SciView" order="0" weight="0.3295129" />
@@ -500,32 +481,6 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" order="1" />
-      <window_info anchor="bottom" x="0" y="125" width="1440" height="610" id="Run" order="8" weight="0.83468837" />
-      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49934298" visible="true" weight="0.25" />
-      <window_info id="Structure" order="3" sideWeight="0.500657" side_tool="true" weight="0.24236111" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" />
-      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="5" />
-      <window_info id="Designer" order="1" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
-      <window_info anchor="right" id="Database" order="1" weight="0.3295129" />
-      <window_info anchor="right" id="Palette&#9;" order="5" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.3292683" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.3298292" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="right" id="SciView" order="0" weight="0.3295129" />
-      <window_info anchor="bottom" id="Find" order="7" />
-      <window_info anchor="bottom" id="Messages" order="0" />
-      <window_info anchor="right" id="Maven Projects" order="2" weight="0.3295129" />
-      <window_info id="Favorites" order="0" sideWeight="0.501355" side_tool="true" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -834,12 +789,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generator_tools.py">
+    <entry file="file://$PROJECT_DIR$/generator/generator_networks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="179" column="6" lean-forward="true" selection-start-line="179" selection-start-column="6" selection-end-line="186" selection-end-column="101" />
+        <state relative-caret-position="975">
+          <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
           <folding>
-            <element signature="e#859#902#0" expanded="true" />
+            <element signature="e#879#922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -851,12 +806,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generator/generator_networks.py">
+    <entry file="file://$PROJECT_DIR$/generator_tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="975">
-          <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+        <state relative-caret-position="120">
+          <caret line="182" column="73" lean-forward="true" selection-start-line="182" selection-start-column="24" selection-end-line="182" selection-end-column="73" />
           <folding>
-            <element signature="e#879#922#0" expanded="true" />
+            <element signature="e#859#902#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -864,8 +819,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="192">
-            <caret line="93" column="9" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
+          <first_editor relative-caret-position="282">
+            <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
           </first_editor>
           <second_editor />
         </state>

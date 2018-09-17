@@ -176,15 +176,16 @@ def main(argv):
     USAGE: python generator_tools.py [OPTIONS] COMMANDS
 
     OPTIONS: 
-      -h     use the help manual.
-      -c     generator fabric network core config file, create configtx.yaml
-      -x     generator fabric channel & block core config file, create crypto-config.yaml
-      -f     generator fabric orderer/peer service, create docker-compose-fabric.yaml
-      -z     generator fabric zookeeper/kafka service, create docker-compose-zookeeper-kafka.yaml
-      -t     generator fabric ca service and fabric network config, create docker-compose-fabric-template.yaml
-      -d     generator couchdb service, create docker-compose-couchdb.yaml
-      -m     generator prom monitor service network, create docker-compose-fabric-monitor.yaml
-      -p     generator connect fabric network properties config, create fabric-chaincode.*.properties
+      -h,--help         use the help manual.
+      -c,--configtx     generator fabric network core config file, create configtx.yaml
+      -x,--crypto       generator fabric channel & block core config file, create crypto-config.yaml
+      -f,--fabric       generator fabric orderer/peer service, create docker-compose-fabric.yaml
+      -s,--shell        generator fabric shell script, create generate.sh
+      -z,--zk           generator fabric zookeeper/kafka service, create docker-compose-zookeeper-kafka.yaml
+      -t,--template     generator fabric ca service and fabric network config, create docker-compose-fabric-template.yaml
+      -d,--couchdb      generator couchdb service, create docker-compose-couchdb.yaml
+      -m,--monitor      generator prom monitor service network, create docker-compose-fabric-monitor.yaml
+      -p,--properties   generator connect fabric network properties config, create fabric-chaincode.*.properties
     
     COMMANDS:
       gen         generator fabric network config files

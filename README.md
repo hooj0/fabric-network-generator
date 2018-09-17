@@ -19,6 +19,7 @@
  + generator `couchdb` service, create `docker-compose-couchdb.yaml`
  + generator `prom monitor` service network, create `docker-compose-fabric-monitor.yaml`
  + generator `connect fabric network properties` config, create `fabric-chaincode.*.properties`
+ + generator fabric `shell script`, create `generate.sh`
  
  ## Getting started
  ```shell
