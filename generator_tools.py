@@ -25,6 +25,8 @@ from generator.generator_networks import GenFabricNetworkTools
 from generator.network_model import OrdererOrg
 from generator.network_model import PeerOrg
 import os
+import sys
+import getopt
 import shutil
 import yaml
 
@@ -38,10 +40,11 @@ class GeneratorTools(object):
         log.line('copy networks file')
         log.info('copy network files to "%s"' % output)
 
-        if not os.path.exists(output):
-            os.makedirs(output)
-        else:
+        if os.path.exists(output):
             shutil.rmtree(output)
+        else:
+            # os.makedirs(output, exist_ok=True)
+            pass
 
         shutil.copytree('templates', output)
         shutil.rmtree('%s/commons-macro' % output)
@@ -65,7 +68,7 @@ class GeneratorTools(object):
         log.done('reader settings config')
         return settings
 
-    def __transfor_model(self):
+    def transform_model(self):
         settings = self.__reader_setting_config()
 
         log.line('transfor settings to model')
@@ -109,35 +112,159 @@ class GeneratorTools(object):
         kafka = settings['kafka']
         zookeeper = settings['zookeeper']
 
-        log.debug('orderers: %s' % orderers)
-        log.debug('peers: %s' % peers)
-        log.debug('kafka: %s' % kafka)
-        log.debug('zookeeper: %s' % zookeeper)
+        log.debug('orderers: %s' % str(orderers))
+        log.debug('peers: %s' % str(peers))
+        log.debug('kafka: %s' % str(kafka))
+        log.debug('zookeeper: %s' % str(zookeeper))
 
         log.done('transfor settings to model')
         return settings, orderers, peers, kafka, zookeeper
 
-    def generator_networks(self):
+    def clean_output(self):
+        settings, *_ = self.transform_model()
+
+        output = settings['output']
+        if output is None or len(output) < 1:
+            raise IOError('output dir is undefined.')
+
+        log.title('clean networks directory')
+        log.info('clean networks directory: "%s"' % output)
+
+        if not os.path.exists(output):
+            log.info('[%s] networks directory is not exists' % output)
+        else:
+            shutil.rmtree(output)
+
+        log.done('clean networks directory')
+
+    def generator_networks(self, generator_queues=None):
         log.title('generator networks')
 
-        settings, orderers, peers, kafka, zookeeper = self.__transfor_model()
-
-        self.__copy_network_files(settings['output'])
+        settings, orderers, peers, kafka, zookeeper = self.transform_model()
         tools = GenFabricNetworkTools(settings['output'])
 
-        # result = tools.gen_crypto_config(orderers, peers)
-        result = tools.gen_configtx(orderers, peers, kafka, settings['orderer_type'])
-        # result = tools.gen_generate_shell(peers)
-        # result = tools.gen_fabric_compose(orderers, peers, zookeeper, kafka)
-        # result = tools.gen_zookeeper_kafka(zookeeper, kafka)
-        # result = tools.gen_fabric_template(orderers, peers, zookeeper, kafka)
-        # result = tools.gen_couchdb(orderers, peers, zookeeper, kafka)
-        # result = tools.gen_monitor(orderers, peers, zookeeper, kafka)
-        #
-        # result = tools.gen_properties(orderers, peers)
+        if generator_queues is None:
+            self.__copy_network_files(settings['output'])
 
-        print(result)
+        if generator_queues is None or 'crypto' in generator_queues:
+            result = tools.gen_crypto_config(orderers, peers)
+        if generator_queues is None or 'configtx' in generator_queues:
+            result = tools.gen_configtx(orderers, peers, kafka, settings['orderer_type'])
+        if generator_queues is None or 'shell' in generator_queues:
+            result = tools.gen_generate_shell(peers)
+        if generator_queues is None or 'fabric' in generator_queues:
+            result = tools.gen_fabric_compose(orderers, peers, zookeeper, kafka)
+        if generator_queues is None or 'zookeeper_kafka' in generator_queues:
+            result = tools.gen_zookeeper_kafka(zookeeper, kafka)
+        if generator_queues is None or 'template' in generator_queues:
+            result = tools.gen_fabric_template(orderers, peers, zookeeper, kafka)
+        if generator_queues is None or 'couchdb' in generator_queues:
+            result = tools.gen_couchdb(orderers, peers, zookeeper, kafka)
+        if generator_queues is None or 'monitor' in generator_queues:
+            result = tools.gen_monitor(orderers, peers, zookeeper, kafka)
+        if generator_queues is None or 'properties' in generator_queues:
+            result = tools.gen_properties(orderers, peers)
+
+        # print(result)
         log.done('generator networks')
 
 
-GeneratorTools().generator_networks()
+def main(argv):
+    log.debug('argv: %s' % argv)
+
+    help_usage = '''
+    USAGE: python generator_tools.py [OPTIONS] COMMANDS
+
+    OPTIONS: 
+      -h     use the help manual.
+      -c     generator fabric network core config file, create configtx.yaml
+      -x     generator fabric channel & block core config file, create crypto-config.yaml
+      -f     generator fabric orderer/peer service, create docker-compose-fabric.yaml
+      -z     generator fabric zookeeper/kafka service, create docker-compose-zookeeper-kafka.yaml
+      -t     generator fabric ca service and fabric network config, create docker-compose-fabric-template.yaml
+      -d     generator couchdb service, create docker-compose-couchdb.yaml
+      -m     generator prom monitor service network, create docker-compose-fabric-monitor.yaml
+      -p     generator connect fabric network properties config, create fabric-chaincode.*.properties
+    
+    
+    COMMANDS:
+      gen         generator fabric network config files
+      regen       regenerator fabric network config files
+      clean       clean fabric networks files
+      help        use the help manual.
+        
+    EXAMPLES: 
+      python generator_tools.py -h
+      python generator_tools.py help
+    
+      python generator_tools.py gen
+      python generator_tools.py clean
+      
+      python generator_tools.py -c gen
+      python generator_tools.py -cx gen
+      python generator_tools.py -cx clean gen
+      
+      python generator_tools.py -hcxsfztdmp gen
+      python generator_tools.py -hcxsfztdmp clean gen
+    '''
+
+    # default generator all networks
+    tools = GeneratorTools()
+    if len(argv) < 1:
+        tools.generator_networks()
+        sys.exit()
+
+    try:
+        long_opts = ["help", "crypto", "configtx", "shell", "fabric", "zk", "template", "couchdb", "monitor", "properties"]
+        opts, args = getopt.getopt(argv, "hcxsfztdmp", long_opts)
+        log.debug('opts: %s, args: %s' % (opts, args))
+    except getopt.GetoptError:
+        print(help_usage)
+        sys.exit(2)
+
+    generator_queues = []
+    for opt, arg in opts:
+        if opt in ('-h', '--help'):
+            print(help_usage)
+            sys.exit()
+        elif opt in ("-c", "--crypto"):
+            generator_queues.append('crypto')
+        elif opt in ("-x", "--configtx"):
+            generator_queues.append('configtx')
+        elif opt in ("-s", "--shell"):
+            generator_queues.append('shell')
+        elif opt in ("-f", "--fabric"):
+            generator_queues.append('fabric')
+        elif opt in ("-z", "--zk"):
+            generator_queues.append('zookeeper_kafka')
+        elif opt in ("-t", "--template"):
+            generator_queues.append('template')
+        elif opt in ("-d", "--couchdb"):
+            generator_queues.append('couchdb')
+        elif opt in ("-m", "--monitor"):
+            generator_queues.append('monitor')
+        elif opt in ("-p", "--properties"):
+            generator_queues.append('properties')
+
+    if len(generator_queues) == 0:
+        generator_queues = None
+
+    for arg in args:
+        if arg == 'clean':
+            tools.clean_output()
+        elif arg == 'gen' or arg == 'generator':
+            tools.generator_networks(generator_queues)
+        elif arg == 'regen':
+            tools.clean_output()
+            tools.generator_networks(generator_queues)
+        else:
+            print(help_usage)
+            sys.exit()
+
+    if len(args) < 0:
+        print(help_usage)
+        sys.exit()
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
