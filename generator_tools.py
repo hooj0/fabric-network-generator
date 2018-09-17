@@ -186,7 +186,6 @@ def main(argv):
       -m     generator prom monitor service network, create docker-compose-fabric-monitor.yaml
       -p     generator connect fabric network properties config, create fabric-chaincode.*.properties
     
-    
     COMMANDS:
       gen         generator fabric network config files
       regen       regenerator fabric network config files
