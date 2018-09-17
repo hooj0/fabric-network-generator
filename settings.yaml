@@ -10,15 +10,15 @@
 settings:
 
   # Output fabric network config directory Generator Settings
-  output: networks
+  output: D:\workspace_blockchain_masget\blockchain-fabric-network\prod
 
   # OrdererType: kafka | solo
-  orderer_type: solo
+  orderer_type: kafka
 
   # Orderer Organization Generator Settings
   orderers:
-    - name: Orderer1
-      domain: example.com
+    - name: Orderer
+      domain: orderer.com
       hostnames: [first, last]
 
   # Peer Organization Generator Settings
@@ -37,8 +37,8 @@ settings:
 
   zookeeper:
     domain: simple.xyz
-    count: 3
+    count: 4
 
   kafka:
     domain: simple.top
-    count: 3
+    count: 4
