@@ -10,15 +10,15 @@
 settings:
 
   # Output fabric network config directory Generator Settings
-  output: D:\workspace_blockchain_masget\blockchain-fabric-network\prod
+  output: networks
 
   # OrdererType: kafka | solo
-  orderer_type: kafka
+  orderer_type: solo
 
   # Orderer Organization Generator Settings
   orderers:
-    - name: Orderer
-      domain: orderer.com
+    - name: Orderer1
+      domain: example.com
       hostnames: [first, last]
 
   # Peer Organization Generator Settings
