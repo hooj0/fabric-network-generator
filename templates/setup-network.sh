@@ -4,7 +4,7 @@ COMPOSE_FILE=docker-compose-cli.yaml
 COMPOSE_FILE_COUCH=docker-compose-couch.yaml
 COMPOSE_FILE_MONITORING=docker-compose-prom.yaml
 COMPOSE_FILE_VISUALIZER=docker-compose-visualizer.yaml
-COMPOSE_FILE_DEPLOY=docker-compose-fabric-deploy.yaml
+COMPOSE_FILE_EXTERNAL_NET=docker-compose-fabric-monitor.yaml
 COMPOSE_FILE_COMMONS="docker-compose-fabric.yaml -f docker-compose-zookeeper-kafka.yaml"
 
 function printHelp () {
@@ -18,7 +18,6 @@ OPTIONS:
   -t     CLI_TIMEOUT, docker-compose cli required request timeout(default: 10000)
   -c     cli mode: run docker-compose command start, use docker-compose-cli.yaml
   -e     e2e mode: run docker-compose command start, use docker-compose-fabric-*.yaml
-  -s     swarm mode: use deploy config service, use ${COMPOSE_FILE_DEPLOY}
   -d     add couchdb service, use docker-compose-couchdb.yaml
   -v     add visualizer service, use docker-compose-visualizer.yaml
   -m     add prom monitor service, use ${COMPOSE_FILE_MONITORING}
@@ -49,8 +48,8 @@ EXAMPLES:
   $0 -edvm up
   $0 -edvm clean up
 
-  $0 -edvms deploy
-  $0 -edvms remove
+  $0 -edvm deploy
+  $0 -edvm remove
   
 HELP
 exit 0
@@ -320,10 +319,8 @@ while getopts ":f:n:t:cedmhvs" opt; do
         v ) 
             REPLENISH_COMPOSE_FILE="${REPLENISH_COMPOSE_FILE} -f ${COMPOSE_FILE_VISUALIZER}"
         ;;
-        s ) 
-            REPLENISH_COMPOSE_FILE="${REPLENISH_COMPOSE_FILE} -f ${COMPOSE_FILE_DEPLOY}"
-        ;;
         m ) 
+            REPLENISH_COMPOSE_FILE="${REPLENISH_COMPOSE_FILE} -f ${COMPOSE_FILE_EXTERNAL_NET}"
             ENABLED_MONITOR="true"
         ;;
         h ) 
