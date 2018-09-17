@@ -79,7 +79,7 @@ settings:
 ```
 
 execute python command generator fabric network files 
- ```sbtshell
+ ```sh
 # show help man 
 python generator_tools.py -h
 python generator_tools.py help
@@ -91,7 +91,7 @@ python generator_tools.py gen
 ```
  
  ## Advanced
-  ```sbtshell
+  ```bash
  # show help man 
  python generator_tools.py -h
  python generator_tools.py help
