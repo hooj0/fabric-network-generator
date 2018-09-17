@@ -42,6 +42,12 @@ class OrdererOrg(object):
         if self.count is None or self.count < 0:
             self.count = 0
 
+    def __str__(self):
+        return "{name: %s, domain: %s, hostnames: %s, count: %s}" % (self.name, self.domain, self.hostnames, self.count)
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class PeerOrg(object):
     """
@@ -69,3 +75,10 @@ class PeerOrg(object):
 
         if self.user_count is None or self.user_count < self.__user_count:
             self.user_count = self.__user_count
+
+    def __str__(self):
+        return "{name: %s, domain: %s, hostnames: %s, template_count: %s, user_count: %s}" \
+               % (self.name, self.domain, self.hostnames, self.template_count, self.user_count)
+
+    def __repr__(self):
+        return self.__str__()
