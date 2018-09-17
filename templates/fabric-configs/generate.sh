@@ -98,7 +98,7 @@ function replacePrivateKey () {
     PRIV_KEY=$(ls *_sk)
     cd $CURRENT_DIR
 
-    sed $OPTS "s/CA%{loop.index0}_PRIVATE_KEY/${PRIV_KEY}/g" "docker-compose-fabric-${VERSION_DIR}.yaml"
+    sed $OPTS "s/CA%{loop.index}_PRIVATE_KEY/${PRIV_KEY}/g" "docker-compose-fabric-${VERSION_DIR}.yaml"
 
     {% endfor %}
 
