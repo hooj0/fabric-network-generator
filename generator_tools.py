@@ -173,7 +173,7 @@ def main(argv):
     log.debug('argv: %s' % argv)
 
     help_usage = '''
-    USAGE: python generator_tools.py [OPTIONS] COMMANDS
+    USAGE: python generator_tools.py [OPTIONS] -hcxsfztdmp COMMANDS gen
 
     OPTIONS: 
       -h,--help         use the help manual.
