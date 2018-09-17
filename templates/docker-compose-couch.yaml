@@ -40,17 +40,17 @@ services:
   {% set peer_name = hostname | lower ~ '_' ~ peer.name | lower %}
   couchdb_%{peer_name | lower }:
     container_name: couchdb.%{peer_host }
-      hostname: couchdb.%{peer_host }
-      <<: *couchdb-base
-    {% if ns.first_peer %}
-      {% set ns.first_peer = false %}
-      ports:
-        - "5984:5984"
-    {% endif %}
-      networks:
-        blockchain_net:
-          aliases:
-            - couchdb.%{peer_host }
+    hostname: couchdb.%{peer_host }
+    <<: *couchdb-base
+  {% if ns.first_peer %}
+    {% set ns.first_peer = false %}
+    ports:
+      - "5984:5984"
+  {% endif %}
+    networks:
+      blockchain_net:
+        aliases:
+          - couchdb.%{peer_host }
 {% endcall %}
 
 {% call(peer, domain, hostname) dump_peers(true) %}
