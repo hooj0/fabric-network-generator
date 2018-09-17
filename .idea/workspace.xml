@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="18c4ae78-931b-4beb-9030-89fa102871ac" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/settings.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/settings.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docker-compose-couch.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="18c4ae78-931b-4beb-9030-89fa102871ac" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -391,7 +388,7 @@
       <option name="presentableId" value="Default" />
       <updated>1536738869841</updated>
       <workItem from="1536738876598" duration="123250000" />
-      <workItem from="1537169104060" duration="1891000" />
+      <workItem from="1537169104060" duration="2492000" />
     </task>
     <servers />
   </component>
@@ -428,11 +425,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125141000" />
+    <option name="totallyTimeSpent" value="125742000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="12" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
