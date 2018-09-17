@@ -1,8 +1,9 @@
  # Fabric Network Generator Tools
-
+:hammer_and_wrench: hyperledger fabric chaincode network config generator tools.
  
  ## Introduction
-  :hammer_and_wrench: hyperledger fabric chaincode network config generator tools.
+  
+  Helps you quickly generate a fabric network configuration, reducing cumbersome, repetitive configuration processes and reducing configuration errors. Flexible, highly available generation methods that make it easy to extend your template to customize your own network configuration files.
  ## Preparation
  + python3
  + jinja2
