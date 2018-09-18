@@ -12,6 +12,19 @@ networks:
       name: monitor_net
 
 services:
+  configtxlator:
+    networks:
+      - external_monitor_net
+    
+  ccenv:
+    networks:
+      - external_monitor_net
+    
+  visualizer:
+    networks:
+      - external_monitor_net
+      
+      
 #-----------------------------------------------------------------------------------
 # ca service yaml
 #-----------------------------------------------------------------------------------
@@ -61,16 +74,4 @@ services:
     networks:
       - external_monitor_net
 {% endcall %}
-
-  configtxlator:
-    networks:
-      - external_monitor_net
-    
-  ccenv:
-    networks:
-      - external_monitor_net
-    
-  visualizer:
-    networks:
-      - external_monitor_net    
          
