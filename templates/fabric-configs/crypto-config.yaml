@@ -125,9 +125,10 @@ PeerOrgs:
         #CommonName: foo27.org5.example.com # overrides Hostname-based FQDN set above
         {% endif %}
       {% endfor %}
-    {% endif %}
+    {% else %}
     Template:
       Count: %{peer.template_count }
+    {% endif %}
     Users:
       Count: %{peer.user_count }
 
